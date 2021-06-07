@@ -35,7 +35,6 @@ export default function Step_1({ formData, setForm, navigation }) {
   return (
     <Container>
       <div className="step_form-wrapper">
-        <h3 className="step_heading">Select your gender</h3>
         <div className="selection_wrap gender-wrap">
           <div className="radio">
             <input
