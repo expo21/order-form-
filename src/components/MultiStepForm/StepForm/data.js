@@ -421,7 +421,7 @@ const data_Step_3 = {
       },
       {
         title: "Contrast Position",
-        type: "checkbox",
+        type: "radio",
         options: ["option_1", "option_2", "option_3"],
       },
       {

@@ -15,11 +15,11 @@ const defaultData = {
   Tel: "",
   Address: "",
   garment_type: "",
-  garment_style: "",
   fitting: "",
   fabric: "",
   choose_style: "",
   ready_style_number: "",
+  custom: {},
 };
 
 const steps = [

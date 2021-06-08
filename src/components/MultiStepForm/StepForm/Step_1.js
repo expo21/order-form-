@@ -45,7 +45,7 @@ export default function Step_1({ formData, setForm, navigation }) {
               checked={gender === "men"}
               onChange={setForm}
             />{" "}
-            <label for="men" className="men">
+            <label htmlFor="men" className="men">
               Men
             </label>
           </div>
@@ -58,7 +58,7 @@ export default function Step_1({ formData, setForm, navigation }) {
               checked={gender === "women"}
               onChange={setForm}
             />{" "}
-            <label for="women" className="women">
+            <label htmlFor="women" className="women">
               Women
             </label>
           </div>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 
 const data = {
@@ -17,7 +17,16 @@ const data = {
 };
 
 export default function Step_2({ formData, setForm, navigation }) {
+  const [error, setError] = useState("");
   console.log(formData);
+  const nextFunction = () => {
+    if (formData.garment_type) {
+      // setError("");
+      navigation.next();
+    } else {
+      setError("Please Choose Grament Type.");
+    }
+  };
   return (
     <div>
       <h3 className="step_heading">Choose your clothes</h3>
@@ -41,8 +50,9 @@ export default function Step_2({ formData, setForm, navigation }) {
       </div>
 
       <div className="form_footer">
+        {error && formData.garment_type === "" ? <p>{error}</p> : null}
         <Button onClick={() => navigation.previous()}>Back</Button>
-        <Button onClick={() => navigation.next()}>Next</Button>
+        <Button onClick={() => nextFunction()}>Next</Button>
       </div>
     </div>
   );

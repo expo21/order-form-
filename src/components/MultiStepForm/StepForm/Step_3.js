@@ -1,14 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
+
 import Button from "@material-ui/core/Button";
 
 import { data_Step_3 as data } from "./data";
+import { ContactlessOutlined } from "@material-ui/icons";
 
 export default function Step_3({ formData, setForm, navigation }) {
   console.log(formData);
+
   const { ready_style_number } = formData;
-  // const onChange = () => {
-  //   console.log("ssfgu");
-  // };
   return (
     <div>
       <div className="step_form-wrapper">
@@ -92,22 +92,32 @@ export default function Step_3({ formData, setForm, navigation }) {
           {" "}
           {data[formData.garment_type].custom.map((x) => {
             return (
-              <div key={x} className="step_form-wrapper">
+              <div key={x.title} className="step_form-wrapper">
                 {x.title}
                 <div className="selection_wrap">
                   {x.type === "radio" ? (
                     x.options.map((i) => {
+                      console.log(
+                        formData.custom[x.title.split(" ").join("_")]
+                      );
                       return (
-                        <div className="radio">
+                        <div key={i} className="radio">
                           <input
                             type="radio"
-                            id={i}
+                            id={`${x.title.split(" ").join("_")}_${i}`}
                             value={i}
-                            name={x.title}
-                            checked={formData[x.title] === i}
+                            name={`custom.${x.title.split(" ").join("_")}`}
+                            checked={
+                              formData.custom[x.title.split(" ").join("_")] ===
+                              i
+                            }
                             onChange={setForm}
                           />
-                          <label htmlFor={i}>{i}</label>
+                          <label
+                            htmlFor={`${x.title.split(" ").join("_")}_${i}`}
+                          >
+                            {i}
+                          </label>
                         </div>
                       );
                     })
@@ -117,7 +127,7 @@ export default function Step_3({ formData, setForm, navigation }) {
                       <input
                         label="Name"
                         type="text"
-                        value={formData[x.title]}
+                        value={formData.custom[x.title]}
                         name={x.title}
                         onChange={setForm}
                         autoComplete="off"
@@ -129,7 +139,7 @@ export default function Step_3({ formData, setForm, navigation }) {
                       <input
                         label="Name"
                         type="textarea"
-                        value={formData[x.title]}
+                        value={formData.custom[x.title]}
                         name={x.title}
                         onChange={setForm}
                         autoComplete="off"

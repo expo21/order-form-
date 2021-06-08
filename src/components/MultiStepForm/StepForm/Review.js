@@ -13,7 +13,7 @@ import EditIcon from "@material-ui/icons/Edit";
 export default function Review({ formData, navigation }) {
   const { go } = navigation;
   console.log(navigation);
-  const { name, Address, email, Tel } = formData;
+  const { name, Address, email, Tel, gender } = formData;
   const submitData = (formData) => {
     console.log(formData);
   };
@@ -26,6 +26,7 @@ export default function Review({ formData, navigation }) {
           go={go}
           details={[
             { date: new Date() },
+            { Gender: gender },
             { Name: name },
             { Email: email },
             { Address: Address },
