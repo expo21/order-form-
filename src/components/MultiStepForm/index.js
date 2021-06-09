@@ -8,18 +8,12 @@ import Review from "./StepForm/Review";
 import Submit from "./StepForm/Submit";
 
 const defaultData = {
-  gender: "men",
-  name: "",
-  email: "",
-  nickName: "",
-  Tel: "",
-  Address: "",
-  garment_type: "",
-  fitting: "",
-  fabric: "",
-  choose_style: "",
-  ready_style_number: "",
-  custom: {},
+  step_1: {},
+  step_2: {},
+  step_3: {
+    custom: {},
+  },
+  step_4: {},
 };
 
 const steps = [

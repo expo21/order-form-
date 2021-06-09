@@ -3,7 +3,7 @@ import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
 
 export default function Step_1({ formData, setForm, navigation }) {
-  const { gender, name, email, address, Tel } = formData;
+  const { gender, name, email, address, Tel } = formData.step_1;
 
   const [errors, setErrors] = useState({});
 
@@ -41,7 +41,7 @@ export default function Step_1({ formData, setForm, navigation }) {
               id="men"
               type="radio"
               value="men"
-              name="gender"
+              name="step_1.gender"
               checked={gender === "men"}
               onChange={setForm}
             />{" "}
@@ -54,7 +54,7 @@ export default function Step_1({ formData, setForm, navigation }) {
               id="women"
               type="radio"
               value="women"
-              name="gender"
+              name="step_1.gender"
               checked={gender === "women"}
               onChange={setForm}
             />{" "}
@@ -70,20 +70,21 @@ export default function Step_1({ formData, setForm, navigation }) {
               label="Name"
               type="text"
               value={name}
-              name="name"
+              name="step_1.name"
               onFocus={func}
               onChange={setForm}
               autoComplete="off"
             />
             {errors.name && <p>{errors.name}</p>}
           </div>
+
           <div className="inputs_wrap-inner">
             <input
               placeholder="Email"
               label="Email"
               type="email"
               value={email}
-              name="email"
+              name="step_1.email"
               onChange={setForm}
               autoComplete="off"
             />
@@ -94,7 +95,7 @@ export default function Step_1({ formData, setForm, navigation }) {
               label="Address"
               type="text"
               value={address}
-              name="address"
+              name="step_1.address"
               onChange={setForm}
               autoComplete="off"
             />
@@ -106,7 +107,7 @@ export default function Step_1({ formData, setForm, navigation }) {
               type="text"
               value={Tel}
               onFocus={func}
-              name="Tel"
+              name="step_1.Tel"
               onChange={setForm}
               autoComplete="off"
             />

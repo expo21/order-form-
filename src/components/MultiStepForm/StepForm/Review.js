@@ -12,8 +12,8 @@ import EditIcon from "@material-ui/icons/Edit";
 
 export default function Review({ formData, navigation }) {
   const { go } = navigation;
-  console.log(navigation);
-  const { name, Address, email, Tel, gender } = formData;
+  console.log({ ...formData.step_1 });
+  const { gender, name, email, Address, Tel } = formData.step_1;
   const submitData = (formData) => {
     console.log(formData);
   };

@@ -31,7 +31,7 @@ export default function Step_4({ formData, setForm, navigation }) {
                 label={x}
                 type="text"
                 value={formData[x]}
-                name={x}
+                name={`step_4.${x}`}
                 // onFocus={func}
                 onChange={setForm}
                 autoComplete="off"

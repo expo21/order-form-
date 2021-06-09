@@ -14,15 +14,15 @@ export default function Step_3({ formData, setForm, navigation }) {
       <div className="step_form-wrapper">
         <h3>Fitting</h3>
         <div className="selection_wrap">
-          {data[formData.garment_type].fitting.map((i) => {
+          {data[formData.step_2.garment_type].fitting.map((i) => {
             return (
               <div key={i} className="radio">
                 <input
                   type="radio"
                   id={i}
                   value={i}
-                  name="fitting"
-                  checked={formData.fitting === i}
+                  name="step_3.fitting"
+                  checked={formData.step_3.fitting === i}
                   onChange={setForm}
                 />{" "}
                 <label htmlFor={i}>{i}</label>
@@ -34,15 +34,15 @@ export default function Step_3({ formData, setForm, navigation }) {
       <div className="step_form-wrapper">
         <h3>Fabric</h3>
         <div className="selection_wrap">
-          {data[formData.garment_type].fabric.map((i) => {
+          {data[formData.step_2.garment_type].fabric.map((i) => {
             return (
               <div key={i} className="radio">
                 <input
                   type="radio"
                   id={i}
                   value={i}
-                  name="fabric"
-                  checked={formData.fabric === i}
+                  name="step_3.fabric"
+                  checked={formData.step_3.fabric === i}
                   onChange={setForm}
                 />
                 <label htmlFor={i}>{i}</label>
@@ -51,19 +51,19 @@ export default function Step_3({ formData, setForm, navigation }) {
           })}
         </div>
       </div>
-      {formData.garment_type !== "Denim Jacket" && (
+      {formData.step_2.garment_type !== "Denim Jacket" && (
         <div className="step_form-wrapper">
           <h3>Choose Style</h3>
           <div className="selection_wrap">
-            {data[formData.garment_type].choose_style.map((i) => {
+            {data[formData.step_2.garment_type].choose_style.map((i) => {
               return (
                 <div key={i} className="radio">
                   <input
                     type="radio"
                     id={i}
                     value={i}
-                    name="choose_style"
-                    checked={formData.choose_style === i}
+                    name="step_3.choose_style"
+                    checked={formData.step_3.choose_style === i}
                     onChange={setForm}
                   />{" "}
                   <label htmlFor={i}>{i}</label>
@@ -73,7 +73,7 @@ export default function Step_3({ formData, setForm, navigation }) {
           </div>
         </div>
       )}
-      {formData.choose_style === "Ready Made Style" ? (
+      {formData.step_3.choose_style === "Ready Made Style" ? (
         <div className="step_form-wrapper">
           <label>Ready Style Number</label>
           <div>
@@ -81,35 +81,35 @@ export default function Step_3({ formData, setForm, navigation }) {
               label="Name"
               type="text"
               value={ready_style_number}
-              name="ready_style_number"
+              name="step_3.ready_style_number"
               onChange={setForm}
               autoComplete="off"
             />
           </div>
         </div>
-      ) : formData.choose_style === "Custom Style" ? (
+      ) : formData.step_3.choose_style === "Custom Style" ? (
         <div>
           {" "}
-          {data[formData.garment_type].custom.map((x) => {
+          {data[formData.step_2.garment_type].custom.map((x) => {
             return (
               <div key={x.title} className="step_form-wrapper">
                 {x.title}
                 <div className="selection_wrap">
                   {x.type === "radio" ? (
                     x.options.map((i) => {
-                      console.log(
-                        formData.custom[x.title.split(" ").join("_")]
-                      );
                       return (
                         <div key={i} className="radio">
                           <input
                             type="radio"
                             id={`${x.title.split(" ").join("_")}_${i}`}
                             value={i}
-                            name={`custom.${x.title.split(" ").join("_")}`}
+                            name={`step_3.custom.${x.title
+                              .split(" ")
+                              .join("_")}`}
                             checked={
-                              formData.custom[x.title.split(" ").join("_")] ===
-                              i
+                              formData.step_3.custom[
+                                x.title.split(" ").join("_")
+                              ] === i
                             }
                             onChange={setForm}
                           />
@@ -127,7 +127,11 @@ export default function Step_3({ formData, setForm, navigation }) {
                       <input
                         label="Name"
                         type="text"
-                        value={formData.custom[x.title]}
+                        value={
+                          formData.step_3[
+                            `custom.${x.title.split(" ").join("_")}`
+                          ]
+                        }
                         name={x.title}
                         onChange={setForm}
                         autoComplete="off"
@@ -139,7 +143,11 @@ export default function Step_3({ formData, setForm, navigation }) {
                       <input
                         label="Name"
                         type="textarea"
-                        value={formData.custom[x.title]}
+                        value={
+                          formData.step_3[
+                            `custom.${x.title.split(" ").join("_")}`
+                          ]
+                        }
                         name={x.title}
                         onChange={setForm}
                         autoComplete="off"
@@ -152,11 +160,12 @@ export default function Step_3({ formData, setForm, navigation }) {
           })}
         </div>
       ) : null}
-      {formData.garment_type === "Denim Jacket" ? (
+      {formData.step_2.garment_type === "Denim Jacket" ? (
         <div className="step_form-wrapper">
           {/* Style Number _Denim Jacket */}
           <div className="selection_wrap">
-            {data[formData.garment_type].style_number.map((i) => {
+            Style Number
+            {data[formData.step_2.garment_type].style_number.map((i) => {
               return (
                 <div key={i}>
                   <div className="radio">
@@ -164,8 +173,8 @@ export default function Step_3({ formData, setForm, navigation }) {
                       type="radio"
                       id={i}
                       value={i}
-                      name="style_number"
-                      checked={formData.style_number === i}
+                      name="step_3.style_number"
+                      checked={formData.step_3.style_number === i}
                       onChange={setForm}
                     />{" "}
                     <label htmlFor={i}>{i}</label>
@@ -176,7 +185,8 @@ export default function Step_3({ formData, setForm, navigation }) {
           </div>
           {/* Thread Color - Denim Jacket */}
           <div className="selection_wrap">
-            {data[formData.garment_type].thread_color.map((i) => {
+            Thread color
+            {data[formData.step_2.garment_type].thread_color.map((i) => {
               return (
                 <div key={i}>
                   <div className="radio">
@@ -184,8 +194,8 @@ export default function Step_3({ formData, setForm, navigation }) {
                       type="radio"
                       id={i}
                       value={i}
-                      name="thread_color"
-                      checked={formData.thread_color === i}
+                      name="step_3.thread_color"
+                      checked={formData.step_3.thread_color === i}
                       onChange={setForm}
                     />{" "}
                     <label htmlFor={i}>{i}</label>
@@ -196,19 +206,20 @@ export default function Step_3({ formData, setForm, navigation }) {
           </div>
           {/* Style Number _Denim Jacket */}
           <div className="selection_wrap">
-            {data[formData.garment_type].button.map((i) => {
+            Button
+            {data[formData.step_2.garment_type].button.map((i) => {
               return (
                 <div key={i}>
                   <div className="radio">
                     <input
                       type="radio"
-                      id={i}
+                      id={`button_${i}`}
                       value={i}
-                      name="button"
-                      checked={formData.button === i}
+                      name="step_3.button"
+                      checked={formData.step_3.button === i}
                       onChange={setForm}
                     />{" "}
-                    <label htmlFor={i}>{i}</label>
+                    <label htmlFor={`button_${i}`}>{i}</label>
                   </div>
                 </div>
               );
@@ -216,19 +227,20 @@ export default function Step_3({ formData, setForm, navigation }) {
           </div>
           {/* Leather Label _Denim Jacket */}
           <div className="selection_wrap">
-            {data[formData.garment_type].leather_Label.map((i) => {
+            Leather Label
+            {data[formData.step_2.garment_type].leather_Label.map((i) => {
               return (
                 <div key={i}>
                   <div className="radio">
                     <input
                       type="radio"
-                      id={i}
+                      id={`leather_Label_${i}`}
                       value={i}
-                      name="leather_Label"
-                      checked={formData.leather_Label === i}
+                      name="step_3.leather_Label"
+                      checked={formData.step_3.leather_Label === i}
                       onChange={setForm}
                     />{" "}
-                    <label htmlFor={i}>{i}</label>
+                    <label htmlFor={`leather_Label_${i}`}>{i}</label>
                   </div>
                 </div>
               );

@@ -20,7 +20,7 @@ export default function Step_2({ formData, setForm, navigation }) {
   const [error, setError] = useState("");
   console.log(formData);
   const nextFunction = () => {
-    if (formData.garment_type) {
+    if (formData.step_2.garment_type) {
       // setError("");
       navigation.next();
     } else {
@@ -31,15 +31,15 @@ export default function Step_2({ formData, setForm, navigation }) {
     <div>
       <h3 className="step_heading">Choose your clothes</h3>
       <div className="selection_wrap gender-wrap">
-        {data[formData.gender].map((i, index) => {
+        {data[formData.step_1.gender].map((i, index) => {
           return (
             <div key={index} className="radio">
               <input
                 id={i.value}
                 type="radio"
                 value={i.value}
-                name="garment_type"
-                checked={formData.garment_type === i.value}
+                name="step_2.garment_type"
+                checked={formData.step_2.garment_type === i.value}
                 onChange={setForm}
               />{" "}
               {/* {i.value} */}
@@ -50,7 +50,7 @@ export default function Step_2({ formData, setForm, navigation }) {
       </div>
 
       <div className="form_footer">
-        {error && formData.garment_type === "" ? <p>{error}</p> : null}
+        {error && formData.step_2.garment_type === "" ? <p>{error}</p> : null}
         <Button onClick={() => navigation.previous()}>Back</Button>
         <Button onClick={() => nextFunction()}>Next</Button>
       </div>
