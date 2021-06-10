@@ -60,6 +60,17 @@ const data_Step_3 = {
         options: ["option_1", "option_2", "option_3"],
       },
       {
+        title: "Monogram Position",
+        type: "checkbox",
+        options: [
+          "Coin Pocket",
+          "Left Pocketing",
+          "Back Side Above Back Pocket",
+          "Inside Waist Band",
+        ],
+      },
+
+      {
         title: "Monogram Color",
         type: "radio",
         options: ["option_1", "option_2", "option_3"],
@@ -143,8 +154,13 @@ const data_Step_3 = {
       },
       {
         title: "Contrast Fabric",
-        type: "radio",
-        options: ["option_1", "option_2", "option_3"],
+        type: "text",
+        options: "",
+      },
+      {
+        title: "Monogram Position",
+        type: "checkbox",
+        options: ["Cuff", "Inside Colar", "Elbow"],
       },
       {
         title: "Monogram Color",

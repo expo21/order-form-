@@ -23,6 +23,7 @@ export default function Step_4({ formData, setForm, navigation }) {
     <div>
       Measurements
       {data.map((x) => {
+        console.log(formData.step_4[x]);
         return (
           <div>
             <div className="inputs_wrap-inner">
@@ -30,7 +31,7 @@ export default function Step_4({ formData, setForm, navigation }) {
                 placeholder={x}
                 label={x}
                 type="text"
-                value={formData[x]}
+                value={formData.step_4[x]}
                 name={`step_4.${x}`}
                 // onFocus={func}
                 onChange={setForm}

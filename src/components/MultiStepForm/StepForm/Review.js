@@ -12,11 +12,39 @@ import EditIcon from "@material-ui/icons/Edit";
 
 export default function Review({ formData, navigation }) {
   const { go } = navigation;
-  console.log({ ...formData.step_1 });
-  const { gender, name, email, Address, Tel } = formData.step_1;
+
+  const { step_3 } = formData;
+  // console.log(Object.keys(step_3).map((i) => {}));
+
+  let step_3_details = [];
+  if (formData.step_3.choose_style === "Custom Style") {
+    let custom_options = Object.keys(formData.step_3.custom).map((i) => {
+      return { [i]: formData.step_3.custom[i] };
+    });
+    console.log(custom_options);
+
+    step_3_details = [
+      { Fitting: formData.step_3.fitting },
+      { Fabric: formData.step_3.fabric },
+      { Style: formData.step_3.choose_style },
+      ...custom_options,
+      // { "ReadyMade Style Number": formData.step_3.ready_style_number },
+    ];
+    console.log(step_3_details);
+  } else {
+    step_3_details = [
+      { Fitting: formData.step_3.fitting },
+      { Fabric: formData.step_3.fabric },
+      { Style: formData.step_3.choose_style },
+      { "ReadyMade Style Number": formData.step_3.ready_style_number },
+    ];
+  }
+
+  const { gender, name, email, address, Tel } = formData.step_1;
   const submitData = (formData) => {
     console.log(formData);
   };
+
   return (
     <div>
       review..
@@ -29,10 +57,13 @@ export default function Review({ formData, navigation }) {
             { Gender: gender },
             { Name: name },
             { Email: email },
-            { Address: Address },
+            { Address: address },
             { Tel: Tel },
           ]}
         />
+        <RenderAccordion summary="Step_2" go={go} details={[formData.step_2]} />
+
+        <RenderAccordion summary="Step_3" go={go} details={step_3_details} />
         {/* <RenderAccordion
           summary="Address"
           go={go}

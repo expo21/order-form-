@@ -73,14 +73,15 @@ export default function Step_3({ formData, setForm, navigation }) {
           </div>
         </div>
       )}
-      {formData.step_3.choose_style === "Ready Made Style" ? (
+      {formData.step_2.garment_type !== "Denim Jacket" &&
+      formData.step_3.choose_style === "Ready Made Style" ? (
         <div className="step_form-wrapper">
           <label>Ready Style Number</label>
           <div>
             <input
               label="Name"
               type="text"
-              value={ready_style_number}
+              value={formData.step_3.ready_style_number}
               name="step_3.ready_style_number"
               onChange={setForm}
               autoComplete="off"
@@ -137,6 +138,10 @@ export default function Step_3({ formData, setForm, navigation }) {
                         autoComplete="off"
                       />
                     </div>
+                  ) : x.type === "checkbox" ? (
+                    x.options.map((i) => {
+                      return <div className="checkbox">{i}</div>;
+                    })
                   ) : (
                     <div className="textarea">
                       <label>{x.title}</label>
@@ -245,6 +250,21 @@ export default function Step_3({ formData, setForm, navigation }) {
                 </div>
               );
             })}
+          </div>
+          {/* special instruction _Denim Jacket */}
+
+          <div className="step_form-wrapper">
+            <label>Special Instruction</label>
+            <div>
+              <input
+                label="Name"
+                type="text"
+                value={formData.step_3.notes}
+                name="step_3.notes"
+                onChange={setForm}
+                autoComplete="off"
+              />
+            </div>
           </div>
         </div>
       ) : null}
