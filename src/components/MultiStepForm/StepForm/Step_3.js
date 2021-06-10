@@ -12,7 +12,7 @@ export default function Step_3({ formData, setForm, navigation }) {
   return (
     <div>
       <div className="step_form-wrapper">
-        <h3>Fitting</h3>
+        <h3 className="selection_subheading">Fitting</h3>
         <div className="selection_wrap">
           {data[formData.step_2.garment_type].fitting.map((i) => {
             return (
@@ -32,7 +32,7 @@ export default function Step_3({ formData, setForm, navigation }) {
         </div>
       </div>
       <div className="step_form-wrapper">
-        <h3>Fabric</h3>
+        <h3 className="selection_subheading">Fabric</h3>
         <div className="selection_wrap">
           {data[formData.step_2.garment_type].fabric.map((i) => {
             return (
@@ -53,7 +53,7 @@ export default function Step_3({ formData, setForm, navigation }) {
       </div>
       {formData.step_2.garment_type !== "Denim Jacket" && (
         <div className="step_form-wrapper">
-          <h3>Choose Style</h3>
+          <h3 className="selection_subheading">Choose Style</h3>
           <div className="selection_wrap">
             {data[formData.step_2.garment_type].choose_style.map((i) => {
               return (
@@ -73,15 +73,14 @@ export default function Step_3({ formData, setForm, navigation }) {
           </div>
         </div>
       )}
-      {formData.step_2.garment_type !== "Denim Jacket" &&
-      formData.step_3.choose_style === "Ready Made Style" ? (
+      {formData.step_3.choose_style === "Ready Made Style" ? (
         <div className="step_form-wrapper">
           <label>Ready Style Number</label>
           <div>
             <input
               label="Name"
               type="text"
-              value={formData.step_3.ready_style_number}
+              value={ready_style_number}
               name="step_3.ready_style_number"
               onChange={setForm}
               autoComplete="off"
@@ -139,10 +138,6 @@ export default function Step_3({ formData, setForm, navigation }) {
                         autoComplete="off"
                       />
                     </div>
-                  ) : x.type === "checkbox" ? (
-                    x.options.map((i) => {
-                      return <div className="checkbox">{i}</div>;
-                    })
                   ) : (
                     <div className="textarea">
                       <label>{x.title}</label>
@@ -169,8 +164,8 @@ export default function Step_3({ formData, setForm, navigation }) {
       {formData.step_2.garment_type === "Denim Jacket" ? (
         <div className="step_form-wrapper">
           {/* Style Number _Denim Jacket */}
+          <h4 className="selection_subheading">Style Number</h4>
           <div className="selection_wrap">
-            Style Number
             {data[formData.step_2.garment_type].style_number.map((i) => {
               return (
                 <div key={i}>
@@ -251,21 +246,6 @@ export default function Step_3({ formData, setForm, navigation }) {
                 </div>
               );
             })}
-          </div>
-          {/* special instruction _Denim Jacket */}
-
-          <div className="step_form-wrapper">
-            <label>Special Instruction</label>
-            <div>
-              <input
-                label="Name"
-                type="text"
-                value={formData.step_3.custom.notes}
-                name="step_3.custom.notes"
-                onChange={setForm}
-                autoComplete="off"
-              />
-            </div>
           </div>
         </div>
       ) : null}

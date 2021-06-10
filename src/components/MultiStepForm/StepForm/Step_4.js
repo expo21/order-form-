@@ -20,18 +20,17 @@ export default function Step_4({ formData, setForm, navigation }) {
     console.log(e);
   };
   return (
-    <div>
+    <div className="step_form-wrapper">
       Measurements
       {data.map((x) => {
-        console.log(formData.step_4[x]);
         return (
-          <div>
+          <div className="inputs_wrap">
             <div className="inputs_wrap-inner">
               <input
                 placeholder={x}
                 label={x}
-                type="text"
-                value={formData.step_4[x]}
+                type="number"
+                value={formData[x]}
                 name={`step_4.${x}`}
                 // onFocus={func}
                 onChange={setForm}
@@ -81,16 +80,11 @@ export default function Step_4({ formData, setForm, navigation }) {
       })}
       <div style={{ marginTop: "1rem" }}>
         <Button
-          color="secondary"
-          variant="contained"
-          style={{ marginRight: "1rem" }}
           onClick={() => navigation.previous()}
         >
           Back
         </Button>
         <Button
-          color="primary"
-          variant="contained"
           onClick={() => navigation.next()}
         >
           Review

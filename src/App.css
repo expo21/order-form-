@@ -16,6 +16,44 @@ body {
   margin: 0 auto;
   display: inline-block;
 }
+
+
+/* Progress bar */
+
+.progress {
+  margin:20px auto 50px;
+  padding:0;
+  width:100%;
+  max-width: 560px;
+  height:20px;
+  overflow:hidden;
+  background:#e5e5e5;
+  border-radius: 50px;
+}
+
+.bar {
+	position:relative;
+  float:left;
+  min-width:1%;
+  height:100%;
+  background:#1c4e7f;
+}
+
+.percent {
+	position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  margin:0;
+  font-family:tahoma,arial,helvetica;
+  font-size:12px;
+  color:white;
+}
+
+
+/* Progress bar */
+
+
 .step_heading {
   font-size: 38px;
   line-height: 44px;
@@ -28,7 +66,7 @@ input[type="radio"] ~ label {
   padding: 30px 10px 20px;
   background-color: #fff;
   border-radius: 6px;
-  border: 2px solid #eee;
+  border: 2px solid #cacaca;
   width: 100%;
   /* max-width: 250px; */
   transition: all 0.15s ease;
@@ -37,7 +75,7 @@ input[type="radio"] ~ label {
   padding-top: 10px;
   font-size: 20px;
   font-weight: normal;
-  color: #eee;
+  color: #cacaca;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -58,6 +96,14 @@ input[type="radio"] ~ label:hover {
 input[type="radio"] ~ label:hover{
 
 } */
+.selection_subheading {
+  font-size: 16px;
+  font-weight: normal;
+  background: #1c4e7f;
+  padding: 10px;
+  color: #ffffff;
+  border-radius: 4px;
+}
 .selection_wrap {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -92,13 +138,14 @@ input[type="radio"] ~ label.women:hover {
   margin: 0 auto;
 }
 input[type="text"],
-input[type="email"] {
+input[type="email"],
+input[type="number"] {
   border-radius: 4px !important;
   height: 50px !important;
   max-width: 600px;
   width: 100%;
   margin: 0 auto;
-  border: 2px solid #eee;
+  border: 2px solid #cacaca;
   color: #1c4d7f;
   font-weight: normal;
   text-indent: 20px;
