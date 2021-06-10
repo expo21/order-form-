@@ -12,6 +12,11 @@ function App() {
           <img src={Logo} className="logo" />
         </a>
       </div>
+      <div className="progress">
+        <div className="bar" style={{width: "35%"}}>
+          <p className="percent">35%</p>
+        </div>
+      </div>
       <div className="red-400">
         <MultiStepForm />
       </div>
