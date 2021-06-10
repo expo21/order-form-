@@ -27,6 +27,12 @@ export default function Step_2({ formData, setForm, navigation }) {
       setError("Please Choose Grament Type.");
     }
   };
+
+  const chooseCloth = (e) => {
+    formData.step_3.custom = {};
+    setForm(e);
+  };
+
   return (
     <div>
       <h3 className="step_heading">Choose your clothes</h3>
@@ -40,7 +46,7 @@ export default function Step_2({ formData, setForm, navigation }) {
                 value={i.value}
                 name="step_2.garment_type"
                 checked={formData.step_2.garment_type === i.value}
-                onChange={setForm}
+                onChange={(e) => chooseCloth(e)}
               />{" "}
               {/* {i.value} */}
               <label for={i.value}>{i.value}</label>

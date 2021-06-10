@@ -88,7 +88,8 @@ export default function Step_3({ formData, setForm, navigation }) {
             />
           </div>
         </div>
-      ) : formData.step_3.choose_style === "Custom Style" ? (
+      ) : formData.step_2.garment_type !== "Denim Jacket" &&
+        formData.step_3.choose_style === "Custom Style" ? (
         <div>
           {" "}
           {data[formData.step_2.garment_type].custom.map((x) => {
@@ -178,8 +179,8 @@ export default function Step_3({ formData, setForm, navigation }) {
                       type="radio"
                       id={i}
                       value={i}
-                      name="step_3.style_number"
-                      checked={formData.step_3.style_number === i}
+                      name="step_3.custom.style_number"
+                      checked={formData.step_3?.custom?.style_number === i}
                       onChange={setForm}
                     />{" "}
                     <label htmlFor={i}>{i}</label>
@@ -199,8 +200,8 @@ export default function Step_3({ formData, setForm, navigation }) {
                       type="radio"
                       id={i}
                       value={i}
-                      name="step_3.thread_color"
-                      checked={formData.step_3.thread_color === i}
+                      name="step_3.custom.thread_color"
+                      checked={formData.step_3.custom.thread_color === i}
                       onChange={setForm}
                     />{" "}
                     <label htmlFor={i}>{i}</label>
@@ -220,8 +221,8 @@ export default function Step_3({ formData, setForm, navigation }) {
                       type="radio"
                       id={`button_${i}`}
                       value={i}
-                      name="step_3.button"
-                      checked={formData.step_3.button === i}
+                      name="step_3.custom.button"
+                      checked={formData.step_3.custom.button === i}
                       onChange={setForm}
                     />{" "}
                     <label htmlFor={`button_${i}`}>{i}</label>
@@ -241,8 +242,8 @@ export default function Step_3({ formData, setForm, navigation }) {
                       type="radio"
                       id={`leather_Label_${i}`}
                       value={i}
-                      name="step_3.leather_Label"
-                      checked={formData.step_3.leather_Label === i}
+                      name="step_3.custom.leather_Label"
+                      checked={formData.step_3.custom.leather_Label === i}
                       onChange={setForm}
                     />{" "}
                     <label htmlFor={`leather_Label_${i}`}>{i}</label>
@@ -259,8 +260,8 @@ export default function Step_3({ formData, setForm, navigation }) {
               <input
                 label="Name"
                 type="text"
-                value={formData.step_3.notes}
-                name="step_3.notes"
+                value={formData.step_3.custom.notes}
+                name="step_3.custom.notes"
                 onChange={setForm}
                 autoComplete="off"
               />

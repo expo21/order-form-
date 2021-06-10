@@ -17,12 +17,14 @@ export default function Review({ formData, navigation }) {
   // console.log(Object.keys(step_3).map((i) => {}));
 
   let step_3_details = [];
-  if (formData.step_3.choose_style === "Custom Style") {
+  if (
+    formData.step_3.choose_style === "Custom Style" ||
+    formData.garment_type === "Denim Jacket"
+  ) {
     let custom_options = Object.keys(formData.step_3.custom).map((i) => {
       return { [i]: formData.step_3.custom[i] };
     });
-    console.log(custom_options);
-
+    console.log("hfgjsgfjsgfjsfg");
     step_3_details = [
       { Fitting: formData.step_3.fitting },
       { Fabric: formData.step_3.fabric },
@@ -31,7 +33,9 @@ export default function Review({ formData, navigation }) {
       // { "ReadyMade Style Number": formData.step_3.ready_style_number },
     ];
     console.log(step_3_details);
-  } else {
+  }
+
+  if (formData.step_3.choose_style === "Ready Made Style") {
     step_3_details = [
       { Fitting: formData.step_3.fitting },
       { Fabric: formData.step_3.fabric },
@@ -39,6 +43,20 @@ export default function Review({ formData, navigation }) {
       { "ReadyMade Style Number": formData.step_3.ready_style_number },
     ];
   }
+
+  // if (formData.step_2.garment_type === "Denim Jacket") {
+  //   step_3_details = [
+  //     { Fitting: formData.step_3.fitting },
+  //     { Fabric: formData.step_3.fabric },
+  //     { "Style Number": formData.step_3.style_number },
+  //     { "Thread Color": formData.step_3.thread_color },
+  //     { "Leather Label": formData.step_3.leather_Label },
+  //     { Button: formData.step_3.button },
+  //     {
+  //       "Special Instructions": formData.step_3.notes,
+  //     },
+  //   ];
+  // }
 
   const { gender, name, email, address, Tel } = formData.step_1;
   const submitData = (formData) => {
@@ -61,9 +79,21 @@ export default function Review({ formData, navigation }) {
             { Tel: Tel },
           ]}
         />
-        <RenderAccordion summary="Step_2" go={go} details={[formData.step_2]} />
+        <RenderAccordion
+          summary="Step_2"
+          go={go}
+          details={[{ "Garment Type": formData.step_2.garment_type }]}
+        />
 
         <RenderAccordion summary="Step_3" go={go} details={step_3_details} />
+        <RenderAccordion
+          summary="Step_4"
+          go={go}
+          details={Object.keys(formData.step_4).map((i) => {
+            return { [i]: formData.step_4[i] };
+          })}
+        />
+
         {/* <RenderAccordion
           summary="Address"
           go={go}
