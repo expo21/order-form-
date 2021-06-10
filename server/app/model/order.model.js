@@ -13,6 +13,7 @@ const OrderSchema = mongoose.Schema(
     fabric: { type: String },
     fitting: { type: String },
     measurements: { type: Object },
+    status: {},
   },
   {
     collection: "orders",

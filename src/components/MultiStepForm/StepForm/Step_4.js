@@ -21,10 +21,10 @@ export default function Step_4({ formData, setForm, navigation }) {
   };
   return (
     <div className="step_form-wrapper">
-      Measurements
-      {data.map((x) => {
-        return (
-          <div className="inputs_wrap">
+      <h3 className="step_heading">Measurements</h3>
+      <div className="inputs_wrap">
+        {data.map((x) => {
+          return (
             <div className="inputs_wrap-inner">
               <input
                 placeholder={x}
@@ -38,57 +38,49 @@ export default function Step_4({ formData, setForm, navigation }) {
               />
               {/* {errors.name && <p>{errors.name}</p>} */}
             </div>
-          </div>
-          // <div key={x} className="input-group">
-          //   {x}
-          //   <span className="input-group-btn">
-          //     <button
-          //       type="button"
-          //       className="btn btn-default btn-number"
-          //       disabled="disabled"
-          //       data-type="minus"
-          //       data-field={x}
-          //       onChange={(e) => onchange(e)}
-          //     >
-          //       <RemoveIcon />
-          //     </button>
-          //   </span>
-          //   <input
-          //     type="text"
-          //     id={x}
-          //     name={x}
-          //     // className="form-control input-number"
-          //     value={formData.chest}
-          //     min="1"
-          //     max="10"
-          //     onChange={setForm}
-          //     // onChangeCapture={(e) => onchange(e)}
-          //   />
-          //   <span className="input-group-btn">
-          //     <button
-          //       type="button"
-          //       className="btn btn-default btn-number"
-          //       data-type="plus"
-          //       data-field={x}
-          //       onChange={(e) => onchange(e)}
-          //     >
-          //       <AddIcon />
-          //     </button>
-          //   </span>
-          // </div>
-        );
-      })}
-      <div style={{ marginTop: "1rem" }}>
-        <Button
-          onClick={() => navigation.previous()}
-        >
-          Back
-        </Button>
-        <Button
-          onClick={() => navigation.next()}
-        >
-          Review
-        </Button>
+            // <div key={x} className="input-group">
+            //   {x}
+            //   <span className="input-group-btn">
+            //     <button
+            //       type="button"
+            //       className="btn btn-default btn-number"
+            //       disabled="disabled"
+            //       data-type="minus"
+            //       data-field={x}
+            //       onChange={(e) => onchange(e)}
+            //     >
+            //       <RemoveIcon />
+            //     </button>
+            //   </span>
+            //   <input
+            //     type="text"
+            //     id={x}
+            //     name={x}
+            //     // className="form-control input-number"
+            //     value={formData.chest}
+            //     min="1"
+            //     max="10"
+            //     onChange={setForm}
+            //     // onChangeCapture={(e) => onchange(e)}
+            //   />
+            //   <span className="input-group-btn">
+            //     <button
+            //       type="button"
+            //       className="btn btn-default btn-number"
+            //       data-type="plus"
+            //       data-field={x}
+            //       onChange={(e) => onchange(e)}
+            //     >
+            //       <AddIcon />
+            //     </button>
+            //   </span>
+            // </div>
+          );
+        })}
+      </div>
+      <div className="form_footer">
+        <Button onClick={() => navigation.previous()}>Back</Button>
+        <Button onClick={() => navigation.next()}>Review</Button>
       </div>
     </div>
   );

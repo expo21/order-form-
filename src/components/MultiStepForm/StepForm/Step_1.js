@@ -8,15 +8,18 @@ export default function Step_1({ formData, setForm, navigation }) {
   const [errors, setErrors] = useState({});
 
   const handleNext = () => {
-    console.log(formData);
-    if (name !== "" && Tel !== "") {
+    console.log(formData.step_1.name, formData.step_1.Tel);
+    if (
+      formData.step_1.name !== undefined &&
+      formData.step_1.Tel !== undefined
+    ) {
       navigation.next();
     } else {
       let error = {};
-      if (name === "") {
+      if (formData.step_1.name === undefined) {
         error.name = "Please provide your name.";
       }
-      if (Tel === "") {
+      if (formData.step_1.Tel === undefined) {
         error.Tel = "Please provide your telepone number..";
       }
       setErrors(error);

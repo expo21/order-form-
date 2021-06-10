@@ -8,7 +8,9 @@ import Review from "./StepForm/Review";
 import Submit from "./StepForm/Submit";
 
 const defaultData = {
-  step_1: {},
+  step_1: {
+    gender: "men",
+  },
   step_2: {},
   step_3: {
     custom: {},

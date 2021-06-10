@@ -24,7 +24,7 @@ export default function Review({ formData, navigation }) {
     let custom_options = Object.keys(formData.step_3.custom).map((i) => {
       return { [i]: formData.step_3.custom[i] };
     });
-    console.log("hfgjsgfjsgfjsfg");
+
     step_3_details = [
       { Fitting: formData.step_3.fitting },
       { Fabric: formData.step_3.fabric },
@@ -64,9 +64,9 @@ export default function Review({ formData, navigation }) {
   };
 
   return (
-    <div>
-      review..
-      <div style={{ marginTop: "1rem" }}>
+    <div className="review_wrapper">
+      <h4 className="step_heading">Review your details</h4>
+      <div className="review_wrapper-inner">
         <RenderAccordion
           summary="Step_1"
           go={go}
@@ -84,7 +84,7 @@ export default function Review({ formData, navigation }) {
           go={go}
           details={[{ "Garment Type": formData.step_2.garment_type }]}
         />
-
+        {console.log(step_3_details)}
         <RenderAccordion summary="Step_3" go={go} details={step_3_details} />
         <RenderAccordion
           summary="Step_4"
@@ -109,21 +109,11 @@ export default function Review({ formData, navigation }) {
           go={go}
           details={[{ Phone: phone }, { Email: email }]}
         /> */}
-        <Button
-          color="secondary"
-          variant="contained"
-          style={{ marginRight: "1rem" }}
-          onClick={() => navigation.previous()}
-        >
-          Back
-        </Button>
-        <Button
-          color="primary"
-          variant="contained"
-          onClick={() => submitData(formData)}
-        >
-          Submit
-        </Button>
+      </div>
+      <div className="form_footer">
+        <Button onClick={() => navigation.previous()}>Back</Button>
+
+        <Button onClick={() => submitData(formData)}>Submit</Button>
       </div>
     </div>
   );
