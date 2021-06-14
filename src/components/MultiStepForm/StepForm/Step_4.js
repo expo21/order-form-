@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Button from "@material-ui/core/Button";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
@@ -14,8 +14,11 @@ const data = [
   "Bicep",
 ];
 
-export default function Step_4({ formData, setForm, navigation }) {
+export default function Step_4({ formData, setForm, navigation, progress }) {
   console.log(formData);
+  useEffect(() => {
+    progress(75);
+  }, []);
   const onchange = (e) => {
     console.log(e);
   };

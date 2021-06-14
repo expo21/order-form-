@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Button from "@material-ui/core/Button";
 import Accordion from "@material-ui/core/Accordion";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
@@ -9,30 +9,33 @@ import ListItemText from "@material-ui/core/ListItemText";
 
 import IconButton from "@material-ui/core/IconButton";
 import EditIcon from "@material-ui/icons/Edit";
-
-export default function Review({ formData, navigation }) {
+import axios from "axios";
+export default function Review({ formData, navigation, progress }) {
   const { go } = navigation;
-
-  const { step_3 } = formData;
-  // console.log(Object.keys(step_3).map((i) => {}));
-
+  useEffect(() => {
+    progress(100);
+  }, []);
   let step_3_details = [];
+
   if (
     formData.step_3.choose_style === "Custom Style" ||
-    formData.garment_type === "Denim Jacket"
+    formData.step_2.garment_type === "Denim Jacket"
   ) {
     let custom_options = Object.keys(formData.step_3.custom).map((i) => {
       return { [i]: formData.step_3.custom[i] };
     });
-
+    console.log(custom_options);
     step_3_details = [
       { Fitting: formData.step_3.fitting },
       { Fabric: formData.step_3.fabric },
-      { Style: formData.step_3.choose_style },
+      {
+        Style:
+          formData.step_2.garment_type === "Denim Jacket"
+            ? "ReadyMade"
+            : formData.step_3.choose_style,
+      },
       ...custom_options,
-      // { "ReadyMade Style Number": formData.step_3.ready_style_number },
     ];
-    console.log(step_3_details);
   }
 
   if (formData.step_3.choose_style === "Ready Made Style") {
@@ -60,7 +63,9 @@ export default function Review({ formData, navigation }) {
 
   const { gender, name, email, address, Tel } = formData.step_1;
   const submitData = (formData) => {
-    console.log(formData);
+    axios.post("http://localhost:3232/order", formData).then((res) => {
+      console.log(res);
+    });
   };
 
   return (
@@ -84,7 +89,7 @@ export default function Review({ formData, navigation }) {
           go={go}
           details={[{ "Garment Type": formData.step_2.garment_type }]}
         />
-        {console.log(step_3_details)}
+
         <RenderAccordion summary="Step_3" go={go} details={step_3_details} />
         <RenderAccordion
           summary="Step_4"
@@ -93,22 +98,6 @@ export default function Review({ formData, navigation }) {
             return { [i]: formData.step_4[i] };
           })}
         />
-
-        {/* <RenderAccordion
-          summary="Address"
-          go={go}
-          details={[
-            { Address: address },
-            { City: city },
-            { State: state },
-            { Zip: zip },
-          ]}
-        />
-        <RenderAccordion
-          summary="Contact"
-          go={go}
-          details={[{ Phone: phone }, { Email: email }]}
-        /> */}
       </div>
       <div className="form_footer">
         <Button onClick={() => navigation.previous()}>Back</Button>

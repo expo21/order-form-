@@ -59,7 +59,8 @@ body {
   font-weight: 700;
   color: #1b4e7d;
 }
-input[type="radio"] ~ label {
+input[type="radio"] ~ label,
+input[type="checkbox"] ~ label {
   padding: 30px 10px 20px;
   background-color: #fff;
   border-radius: 6px;
@@ -77,13 +78,15 @@ input[type="radio"] ~ label {
   align-items: center;
   justify-content: center;
 }
-input[type="radio"]:checked ~ label {
+input[type="radio"]:checked ~ label,
+input[type="checkbox"]:checked ~ label {
   transform: translateY(-3px);
   border: 2px solid #1c4d7f;
   color: #1c4d7f;
   box-shadow: 3px 3px 15px 1px rgb(31 35 60 / 17%);
 }
-input[type="radio"] ~ label:hover {
+input[type="radio"] ~ label:hover,
+input[type="checkbox"] ~ label:hover {
   transform: translateY(-3px);
   border: 2px solid #1c4d7f;
   color: #1c4d7f;
@@ -109,7 +112,8 @@ input[type="radio"] ~ label:hover{
 .selection_wrap input {
   display: none;
 }
-.selection_wrap .radio {
+.selection_wrap .radio,
+.selection_wrap .checkbox {
   width: 100%;
 }
 .step_form-wrapper {
@@ -242,4 +246,31 @@ input[type="number"] {
 .review_wrapper-inner > div {
   border: 2px solid #1b4e7d;
   margin-bottom: 15px;
+}
+
+.text-input {
+  max-width: 100%;
+  width: 100%;
+  margin: 0;
+}
+
+.text-input input {
+  display: block;
+  max-width: 100%;
+  margin: 0;
+}
+
+.text-input textarea {
+  width: 100%;
+  height: 200px;
+  border-radius: 5px;
+  border-color: #cacaca;
+  padding: 10px;
+}
+
+.text-input input[type="checkbox"] {
+  float: left;
+  margin-right: 10px;
+  margin-top: 4px;
+  margin-bottom: 10px;
 }

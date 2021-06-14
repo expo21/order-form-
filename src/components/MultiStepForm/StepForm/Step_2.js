@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "@material-ui/core/Button";
 
 const data = {
@@ -16,9 +16,12 @@ const data = {
   ],
 };
 
-export default function Step_2({ formData, setForm, navigation }) {
+export default function Step_2({ formData, setForm, navigation, progress }) {
   const [error, setError] = useState("");
   console.log(formData);
+  useEffect(() => {
+    progress(25);
+  }, []);
   const nextFunction = () => {
     if (formData.step_2.garment_type) {
       // setError("");
@@ -29,7 +32,7 @@ export default function Step_2({ formData, setForm, navigation }) {
   };
 
   const chooseCloth = (e) => {
-    formData.step_3.custom = {};
+    formData.step_3.custom = { monogram_text: {}, monogram_position: [] };
     setForm(e);
   };
 

@@ -1,13 +1,41 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import Button from "@material-ui/core/Button";
 
 import { data_Step_3 as data } from "./data";
-import { ContactlessOutlined } from "@material-ui/icons";
 
-export default function Step_3({ formData, setForm, navigation }) {
+export default function Step_3({ formData, setForm, navigation, progress }) {
+  const [checkBoxData, setCheckBoxData] = useState([]);
+  const onChecked = (e) => {
+    try {
+      let val = e.target.value;
+      if (checkBoxData.length > 0 && checkBoxData.includes(val)) {
+        console.log("hjfsjf");
+        let checked = checkBoxData.filter((i) => {
+          return i != val;
+        });
+        console.log(checked);
+        setCheckBoxData(checked);
+        formData.step_3.custom.monogram_position = checked;
+      } else {
+        console.log("asas");
+        checkBoxData.push(val);
+
+        setCheckBoxData(checkBoxData);
+        formData.step_3.custom.monogram_position = checkBoxData;
+      }
+      console.log({ checkBoxData });
+    } catch (error) {
+      console.log(error);
+    }
+
+    // setCheckBoxData();
+  };
+
   console.log(formData);
-
+  useEffect(() => {
+    progress(50);
+  }, []);
   const { ready_style_number } = formData;
   return (
     <div>
@@ -123,36 +151,79 @@ export default function Step_3({ formData, setForm, navigation }) {
                       );
                     })
                   ) : x.type === "text" ? (
-                    <div className="text">
-                      <label>{x.title}</label>
-                      <input
-                        label="Name"
-                        type="text"
-                        value={
-                          formData.step_3[
-                            `custom.${x.title.split(" ").join("_")}`
-                          ]
-                        }
-                        name={x.title}
-                        onChange={setForm}
-                        autoComplete="off"
-                      />
+                    <div className="inputs_wrap text-input">
+                      <div className="inputs_wrap-inner">
+                        <input
+                          label={`${x.title.split(" ").join("_")}`}
+                          type="text"
+                          placeholder="Leather Label"
+                          value={
+                            formData.step_3[
+                              `custom.${x.title.split(" ").join("_")}`
+                            ]
+                          }
+                          name={x.title}
+                          onChange={setForm}
+                          autoComplete="off"
+                        />
+                      </div>
                     </div>
+                  ) : x.type === "checkbox" ? (
+                    x.options.map((i) => {
+                      return (
+                        <div key={i} className="checkbox">
+                          <input
+                            type="checkbox"
+                            id={`${x.title.split(" ").join("_")}_${i}`}
+                            value={i}
+                            name={`step_3.custom.${x.title
+                              .split(" ")
+                              .join("_")}`}
+                            // checked={}
+                            onChange={(e) => onChecked(e)}
+                            checked={formData.step_3.custom.monogram_position.includes(
+                              i
+                            )}
+                          />
+                          <label
+                            htmlFor={`${x.title.split(" ").join("_")}_${i}`}
+                          >
+                            {i}
+                          </label>
+
+                          <input
+                            type="text"
+                            name={`step_3.custom.monogram_text.${i
+                              .split(" ")
+                              .join("_")}`}
+                            value={
+                              formData.step_3[
+                                `custom.monogram_text.${i.split(" ").join("_")}`
+                              ]
+                            }
+                            onChange={setForm}
+                            style={{ display: "block" }}
+                          />
+                        </div>
+                      );
+                    })
                   ) : (
-                    <div className="textarea">
-                      <label>{x.title}</label>
-                      <input
-                        label="Name"
-                        type="textarea"
-                        value={
-                          formData.step_3[
-                            `custom.${x.title.split(" ").join("_")}`
-                          ]
-                        }
-                        name={x.title}
-                        onChange={setForm}
-                        autoComplete="off"
-                      />
+                    <div className="inputs_wrap text-input">
+                      <div className="inputs_wrap-inner">
+                        <textarea
+                          label="Name"
+                          type="textarea"
+                          placeholder="Special Instructions"
+                          value={
+                            formData.step_3[
+                              `custom.${x.title.split(" ").join("_")}`
+                            ]
+                          }
+                          name={x.title}
+                          onChange={setForm}
+                          autoComplete="off"
+                        ></textarea>
+                      </div>
                     </div>
                   )}
                 </div>

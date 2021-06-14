@@ -13,7 +13,10 @@ const defaultData = {
   },
   step_2: {},
   step_3: {
-    custom: {},
+    custom: {
+      monogram_text: {},
+      monogram_position: [],
+    },
   },
   step_4: {},
 };
@@ -27,14 +30,14 @@ const steps = [
   { id: "submit" },
 ];
 
-export default function MultiStepForm() {
+export default function MultiStepForm({ progress }) {
   const [formData, setForm] = useForm(defaultData);
   const { step, navigation } = useStep({
     steps,
     initialStep: 0,
   });
 
-  const props = { formData, setForm, navigation };
+  const props = { formData, setForm, navigation, progress };
   switch (step.id) {
     case "step_1":
       return <Step_1 {...props} />;

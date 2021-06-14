@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const OrderSchema = mongoose.Schema(
   {
+    order_number: { type: String },
     name: { type: String },
     email: { type: String },
     address: { type: String },
@@ -13,7 +14,8 @@ const OrderSchema = mongoose.Schema(
     fabric: { type: String },
     fitting: { type: String },
     measurements: { type: Object },
-    status: {},
+    status: { type: String },
+    booking: { type: String },
   },
   {
     collection: "orders",

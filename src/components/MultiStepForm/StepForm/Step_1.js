@@ -1,11 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
 
-export default function Step_1({ formData, setForm, navigation }) {
+export default function Step_1(props) {
+  console.log(props);
+  const { formData, setForm, navigation } = props;
   const { gender, name, email, address, Tel } = formData.step_1;
 
   const [errors, setErrors] = useState({});
+  useEffect(() => {
+    props.progress(0);
+  }, []);
 
   const handleNext = () => {
     console.log(formData.step_1.name, formData.step_1.Tel);
