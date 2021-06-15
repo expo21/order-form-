@@ -9,22 +9,22 @@ import ListItemText from "@material-ui/core/ListItemText";
 
 import IconButton from "@material-ui/core/IconButton";
 import EditIcon from "@material-ui/icons/Edit";
-import axios from "axios";
+// import axios from "axios";
 export default function Review({ formData, navigation, progress }) {
   const { go } = navigation;
   useEffect(() => {
     progress(100);
   }, []);
   let step_3_details = [];
-
+  var custom_options;
   if (
     formData.step_3.choose_style === "Custom Style" ||
     formData.step_2.garment_type === "Denim Jacket"
   ) {
-    let custom_options = Object.keys(formData.step_3.custom).map((i) => {
+    custom_options = Object.keys(formData.step_3.custom).map((i) => {
       return { [i]: formData.step_3.custom[i] };
     });
-    console.log(custom_options);
+
     step_3_details = [
       { Fitting: formData.step_3.fitting },
       { Fabric: formData.step_3.fabric },
@@ -34,6 +34,7 @@ export default function Review({ formData, navigation, progress }) {
             ? "ReadyMade"
             : formData.step_3.choose_style,
       },
+
       ...custom_options,
     ];
   }
@@ -46,26 +47,11 @@ export default function Review({ formData, navigation, progress }) {
       { "ReadyMade Style Number": formData.step_3.ready_style_number },
     ];
   }
-
-  // if (formData.step_2.garment_type === "Denim Jacket") {
-  //   step_3_details = [
-  //     { Fitting: formData.step_3.fitting },
-  //     { Fabric: formData.step_3.fabric },
-  //     { "Style Number": formData.step_3.style_number },
-  //     { "Thread Color": formData.step_3.thread_color },
-  //     { "Leather Label": formData.step_3.leather_Label },
-  //     { Button: formData.step_3.button },
-  //     {
-  //       "Special Instructions": formData.step_3.notes,
-  //     },
-  //   ];
-  // }
-
   const { gender, name, email, address, Tel } = formData.step_1;
   const submitData = (formData) => {
-    axios.post("http://localhost:3232/order", formData).then((res) => {
-      console.log(res);
-    });
+    // axios.post("http://localhost:3232/order", formData).then((res) => {
+    //   console.log(res);
+    // });
   };
 
   return (

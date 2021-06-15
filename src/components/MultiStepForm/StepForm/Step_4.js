@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import Button from "@material-ui/core/Button";
-import AddIcon from "@material-ui/icons/Add";
-import RemoveIcon from "@material-ui/icons/Remove";
+// import AddIcon from "@material-ui/icons/Add";
+// import RemoveIcon from "@material-ui/icons/Remove";
 const data = [
   "Chest",
   "Stomach",
@@ -28,7 +28,7 @@ export default function Step_4({ formData, setForm, navigation, progress }) {
       <div className="inputs_wrap">
         {data.map((x) => {
           return (
-            <div className="inputs_wrap-inner">
+            <div key={x} className="inputs_wrap-inner">
               <input
                 placeholder={x}
                 label={x}

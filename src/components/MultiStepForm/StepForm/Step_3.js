@@ -5,26 +5,43 @@ import Button from "@material-ui/core/Button";
 import { data_Step_3 as data } from "./data";
 
 export default function Step_3({ formData, setForm, navigation, progress }) {
-  const [checkBoxData, setCheckBoxData] = useState([]);
+  const [checkBoxData, setCheckBoxData] = useState(new Map());
+  const [checkedData, setCheckedData] = useState([]);
   const onChecked = (e) => {
     try {
-      let val = e.target.value;
-      if (checkBoxData.length > 0 && checkBoxData.includes(val)) {
-        console.log("hjfsjf");
-        let checked = checkBoxData.filter((i) => {
-          return i != val;
-        });
-        console.log(checked);
-        setCheckBoxData(checked);
-        formData.step_3.custom.monogram_position = checked;
-      } else {
-        console.log("asas");
-        checkBoxData.push(val);
+      checkBoxData.set(e.target.name, e.target.checked);
 
-        setCheckBoxData(checkBoxData);
-        formData.step_3.custom.monogram_position = checkBoxData;
+      let obj = e.target.value;
+      if (checkedData.includes(obj)) {
+        console.log("in");
+        let checked = checkedData.filter((i) => {
+          return i !== obj;
+        });
+        setCheckedData(checked);
+      } else {
+        console.log("out");
+        checkedData.push(obj);
+        setCheckedData(checkedData);
       }
-      console.log({ checkBoxData });
+
+      // update the state by creating a new Map
+      setCheckBoxData(new Map(checkBoxData));
+
+      // if (checkBoxData.length > 0 && checkBoxData.includes(val)) {
+      //   console.log("hjfsjf");
+      //   let checked = checkBoxData.filter((i) => {
+      //     return i != val;
+      //   });
+      //   console.log(checked);
+      //   setCheckBoxData(checked);
+      //   formData.step_3.custom.monogram_position = checked;
+      // } else {
+      //   console.log("asas");
+      //   checkBoxData.push(val);
+
+      //   setCheckBoxData(checkBoxData);
+      //   formData.step_3.custom.monogram_position = checkBoxData;
+      // }
     } catch (error) {
       console.log(error);
     }
@@ -32,10 +49,12 @@ export default function Step_3({ formData, setForm, navigation, progress }) {
     // setCheckBoxData();
   };
 
-  console.log(formData);
   useEffect(() => {
     progress(50);
-  }, []);
+    setCheckedData(formData.step_3.custom.monogram_position);
+
+    console.log(formData);
+  }, [checkedData]);
   const { ready_style_number } = formData;
   return (
     <div>
@@ -153,16 +172,17 @@ export default function Step_3({ formData, setForm, navigation, progress }) {
                   ) : x.type === "text" ? (
                     <div className="inputs_wrap text-input">
                       <div className="inputs_wrap-inner">
+                        {console.log(
+                          formData.step_3.custom[x.title.split(" ").join("_")]
+                        )}
                         <input
                           label={`${x.title.split(" ").join("_")}`}
                           type="text"
-                          placeholder="Leather Label"
+                          placeholder={x.title}
                           value={
-                            formData.step_3[
-                              `custom.${x.title.split(" ").join("_")}`
-                            ]
+                            formData.step_3.custom[x.title.split(" ").join("_")]
                           }
-                          name={x.title}
+                          name={`step_3.custom.${x.title.split(" ").join("_")}`}
                           onChange={setForm}
                           autoComplete="off"
                         />
@@ -181,9 +201,11 @@ export default function Step_3({ formData, setForm, navigation, progress }) {
                               .join("_")}`}
                             // checked={}
                             onChange={(e) => onChecked(e)}
-                            checked={formData.step_3.custom.monogram_position.includes(
-                              i
-                            )}
+                            checked={
+                              formData[
+                                `step_3.custom.${x.title.split(" ").join("_")}`
+                              ]
+                            }
                           />
                           <label
                             htmlFor={`${x.title.split(" ").join("_")}_${i}`}
@@ -197,10 +219,11 @@ export default function Step_3({ formData, setForm, navigation, progress }) {
                               .split(" ")
                               .join("_")}`}
                             value={
-                              formData.step_3[
-                                `custom.monogram_text.${i.split(" ").join("_")}`
+                              formData.step_3.custom.monogram_text[
+                                i.split(" ").join("_")
                               ]
                             }
+                            maxLength="8"
                             onChange={setForm}
                             style={{ display: "block" }}
                           />
@@ -213,14 +236,17 @@ export default function Step_3({ formData, setForm, navigation, progress }) {
                         <textarea
                           label="Name"
                           type="textarea"
-                          placeholder="Special Instructions"
+                          placeholder={x.title}
                           value={
                             formData.step_3[
                               `custom.${x.title.split(" ").join("_")}`
                             ]
                           }
-                          name={x.title}
+                          name={`step_3.custom.${x.title.split(" ").join("_")}`}
                           onChange={setForm}
+                          value={
+                            formData.step_3.custom[x.title.split(" ").join("_")]
+                          }
                           autoComplete="off"
                         ></textarea>
                       </div>

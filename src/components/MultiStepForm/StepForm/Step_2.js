@@ -18,7 +18,7 @@ const data = {
 
 export default function Step_2({ formData, setForm, navigation, progress }) {
   const [error, setError] = useState("");
-  console.log(formData);
+
   useEffect(() => {
     progress(25);
   }, []);
@@ -52,7 +52,7 @@ export default function Step_2({ formData, setForm, navigation, progress }) {
                 onChange={(e) => chooseCloth(e)}
               />{" "}
               {/* {i.value} */}
-              <label for={i.value}>{i.value}</label>
+              <label htmlFor={i.value}>{i.value}</label>
             </div>
           );
         })}

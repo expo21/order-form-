@@ -2,18 +2,15 @@ import React, { useState, useEffect } from "react";
 import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
 
-export default function Step_1(props) {
-  console.log(props);
-  const { formData, setForm, navigation } = props;
+export default function Step_1({ formData, setForm, navigation, progress }) {
   const { gender, name, email, address, Tel } = formData.step_1;
 
   const [errors, setErrors] = useState({});
   useEffect(() => {
-    props.progress(0);
+    progress(0);
   }, []);
 
   const handleNext = () => {
-    console.log(formData.step_1.name, formData.step_1.Tel);
     if (
       formData.step_1.name !== undefined &&
       formData.step_1.Tel !== undefined
@@ -77,7 +74,7 @@ export default function Step_1(props) {
               placeholder="Name"
               label="Name"
               type="text"
-              value={name}
+              value={name || ""}
               name="step_1.name"
               onFocus={func}
               onChange={setForm}
@@ -91,7 +88,7 @@ export default function Step_1(props) {
               placeholder="Email"
               label="Email"
               type="email"
-              value={email}
+              value={email || ""}
               name="step_1.email"
               onChange={setForm}
               autoComplete="off"
@@ -102,7 +99,7 @@ export default function Step_1(props) {
               placeholder="Address"
               label="Address"
               type="text"
-              value={address}
+              value={address || ""}
               name="step_1.address"
               onChange={setForm}
               autoComplete="off"
@@ -113,7 +110,7 @@ export default function Step_1(props) {
               placeholder="Telephone"
               label="Telephone"
               type="text"
-              value={Tel}
+              value={Tel || ""}
               onFocus={func}
               name="step_1.Tel"
               onChange={setForm}
