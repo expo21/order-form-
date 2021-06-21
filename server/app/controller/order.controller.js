@@ -14,22 +14,23 @@ exports.createOrder = async (obj) => {
   try {
     let newOrder = Order({
       order_number: await getNextSequenceValue("productid"),
-      // email: obj.step_1.email,
-      // address: obj.step_1.address,
-      // tel: obj.step_1.tel,
-      // gender: obj.step_1.gender,
-      // garment_type: obj.step_2.garment_type,
-      // choose_style: obj.step_3.choose_style,
-      // fabric: obj.step_3.fabric,
-      // fitting: obj.step_3.fitting,
-      // custom: obj.step_3.custom,
-      // measurements: obj.step_4,
+      name: obj.step_1.name,
+      email: obj.step_1.email,
+      address: obj.step_1.address,
+      tel: obj.step_1.tel,
+      gender: obj.step_1.gender,
+      garment_type: obj.step_2.garment_type,
+      choose_style: obj.step_3.choose_style,
+      fabric: obj.step_3.fabric,
+      fitting: obj.step_3.fitting,
+      custom: obj.step_3.custom,
+      measurements: obj.step_4,
     });
     console.log(newOrder);
     let savedOrder = await newOrder.save();
-    console.log(savedOrder);
+    return savedOrder;
   } catch (error) {
-    console.log(error);
+    return error.message;
   }
 };
 

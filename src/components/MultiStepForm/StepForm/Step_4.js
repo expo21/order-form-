@@ -88,29 +88,3 @@ export default function Step_4({ formData, setForm, navigation, progress }) {
     </div>
   );
 }
-
-{
-  /* <div>
-        {data.map((i) => {
-          return (
-            <div key={i} className="inputs_wrap">
-              
-              <div className="inputs_wrap-inner">
-                <input
-                  placeholder={i}
-                  label={i}
-                  type="number"
-                  value={formData[i]}
-                  name={i}
-                  // onFocus={func}
-                  onChange={setForm}
-                  autoComplete="off"
-                />
-
-                
-              </div>
-            </div>
-          );
-        })}
-      </div> */
-}

@@ -9,7 +9,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 
 import IconButton from "@material-ui/core/IconButton";
 import EditIcon from "@material-ui/icons/Edit";
-// import axios from "axios";
+import axios from "axios";
 export default function Review({ formData, navigation, progress }) {
   const { go } = navigation;
   useEffect(() => {
@@ -49,9 +49,9 @@ export default function Review({ formData, navigation, progress }) {
   }
   const { gender, name, email, address, Tel } = formData.step_1;
   const submitData = (formData) => {
-    // axios.post("http://localhost:3232/order", formData).then((res) => {
-    //   console.log(res);
-    // });
+    axios.post("http://localhost:3232/order", formData).then((res) => {
+      console.log(res);
+    });
   };
 
   return (

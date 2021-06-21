@@ -4,12 +4,14 @@ import Button from "@material-ui/core/Button";
 
 export default function Step_1({ formData, setForm, navigation, progress }) {
   const { gender, name, email, address, Tel } = formData.step_1;
+  const [stepOneData, setStepOneData] = useState({});
 
   const [errors, setErrors] = useState({});
   useEffect(() => {
     progress(0);
   }, []);
 
+  //handle click
   const handleNext = () => {
     if (
       formData.step_1.name !== undefined &&
@@ -27,6 +29,8 @@ export default function Step_1({ formData, setForm, navigation, progress }) {
       setErrors(error);
     }
   };
+
+  //
 
   const func = () => {
     if (errors.name !== "") {

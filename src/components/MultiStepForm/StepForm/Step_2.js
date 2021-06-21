@@ -32,8 +32,19 @@ export default function Step_2({ formData, setForm, navigation, progress }) {
   };
 
   const chooseCloth = (e) => {
-    formData.step_3.custom = { monogram_text: {}, monogram_position: [] };
-    setForm(e);
+    console.log(e.target.value);
+    if (e.target.value === "Denim Jacket") {
+      formData.step_3.custom = {
+        //  monogram_text: {}, monogram_position: []
+      };
+      setForm(e);
+    } else {
+      formData.step_3.custom = {
+        monogram_text: {},
+        Monogram_Position: [],
+      };
+      setForm(e);
+    }
   };
 
   return (

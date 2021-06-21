@@ -15,12 +15,15 @@ module.exports = (app) => {
 
   // post data
   app.post("/order", (req, res) => {
-    console.log(req.body);
     createOrder(req.body)
       .then((result) => {
-        res.send({ status: true, message: "Order Placed." });
+        if (result) {
+          res.send({ status: true, message: "Order Placed." });
+        } else {
+          res.send({ status: false, message: "order not placed" });
+        }
       })
-      .catch();
+      .catch((error) => console.log(error));
   });
 
   //get search data

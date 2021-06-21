@@ -10,7 +10,7 @@ export default function Step_3({ formData, setForm, navigation, progress }) {
   const onChecked = (e) => {
     try {
       checkBoxData.set(e.target.name, e.target.checked);
-
+      console.log(checkBoxData);
       let obj = e.target.value;
       if (checkedData.includes(obj)) {
         console.log("in");
@@ -51,7 +51,7 @@ export default function Step_3({ formData, setForm, navigation, progress }) {
 
   useEffect(() => {
     progress(50);
-    setCheckedData(formData.step_3.custom.monogram_position);
+    setCheckedData(formData.step_3.custom.Monogram_Position);
 
     console.log(formData);
   }, [checkedData]);
@@ -172,9 +172,6 @@ export default function Step_3({ formData, setForm, navigation, progress }) {
                   ) : x.type === "text" ? (
                     <div className="inputs_wrap text-input">
                       <div className="inputs_wrap-inner">
-                        {console.log(
-                          formData.step_3.custom[x.title.split(" ").join("_")]
-                        )}
                         <input
                           label={`${x.title.split(" ").join("_")}`}
                           type="text"
@@ -199,7 +196,6 @@ export default function Step_3({ formData, setForm, navigation, progress }) {
                             name={`step_3.custom.${x.title
                               .split(" ")
                               .join("_")}`}
-                            // checked={}
                             onChange={(e) => onChecked(e)}
                             checked={
                               formData[
@@ -213,20 +209,24 @@ export default function Step_3({ formData, setForm, navigation, progress }) {
                             {i}
                           </label>
 
-                          <input
-                            type="text"
-                            name={`step_3.custom.monogram_text.${i
-                              .split(" ")
-                              .join("_")}`}
-                            value={
-                              formData.step_3.custom.monogram_text[
-                                i.split(" ").join("_")
-                              ]
-                            }
-                            maxLength="8"
-                            onChange={setForm}
-                            style={{ display: "block" }}
-                          />
+                          {formData.step_3.custom[
+                            x.title.split(" ").join("_")
+                          ] === "Monogram_Position" ? (
+                            <input
+                              type="text"
+                              name={`step_3.custom.monogram_text.${i
+                                .split(" ")
+                                .join("_")}`}
+                              value={
+                                formData.step_3.custom.monogram_text[
+                                  i.split(" ").join("_")
+                                ]
+                              }
+                              maxLength="8"
+                              onChange={setForm}
+                              style={{ display: "block" }}
+                            />
+                          ) : null}
                         </div>
                       );
                     })

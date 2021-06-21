@@ -14,8 +14,8 @@ const defaultData = {
   step_2: {},
   step_3: {
     custom: {
-      monogram_text: {},
-      monogram_position: [],
+      // monogram_text: {},
+      // monogram_position: [],
     },
   },
   step_4: {},

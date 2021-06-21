@@ -14,8 +14,8 @@ const OrderSchema = mongoose.Schema(
     fabric: { type: String },
     fitting: { type: String },
     measurements: { type: Object },
-    status: { type: String },
-    booking: { type: String },
+    status: { type: String, default: 1 }, // 1 for active, 0 for inactive
+    booking: { type: String, default: 1 }, // 1 for pending, 2 for booking approved, 3 order completed
   },
   {
     collection: "orders",
