@@ -27,6 +27,8 @@ import TableHead from "@material-ui/core/TableHead";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import Avatar from "@material-ui/core/Avatar";
+import EditIcon from "@material-ui/icons/Edit";
+import DeleteIcon from "@material-ui/icons/Delete";
 import {
   getGarmentList,
   addGarment,
@@ -264,7 +266,7 @@ export default function AddGarment() {
         },
         {
           label: "No",
-          onClick: () => alert("Click No"),
+          onClick: onclose,
         },
       ],
     });
@@ -342,8 +344,20 @@ export default function AddGarment() {
                             })}
 
                             <div>
-                              <p onClick={() => deleteGarment(row)}>Edit</p>
-                              <p onClick={() => garmentDelete(row)}>Delete</p>
+                              {/* <p onClick={() => deleteGarment(row)}>Edit</p>
+                              <p onClick={() => garmentDelete(row)}>Delete</p> */}
+                              <IconButton
+                                onClick={() => deleteGarment(row)}
+                                aria-label="edit"
+                              >
+                                <EditIcon />
+                              </IconButton>
+                              <IconButton
+                                onClick={() => garmentDelete(row)}
+                                aria-label="delete"
+                              >
+                                <DeleteIcon />
+                              </IconButton>
                             </div>
                           </TableRow>
                         );

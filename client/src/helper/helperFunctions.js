@@ -172,5 +172,8 @@ export const updateOrder = async (obj) => {
       obj
     );
     console.log(response);
-  } catch (error) {}
+    return response.data.status;
+  } catch (error) {
+    return false;
+  }
 };

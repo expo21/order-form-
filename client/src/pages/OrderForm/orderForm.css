@@ -284,3 +284,29 @@ input[type="checkbox"] ~ label:hover {
 .emptyDiv .showInput input {
   margin-top: 15px;
 }
+
+.switchSec .MuiGrid-container {
+  justify-content: center;
+}
+
+.switchSec .MuiButtonBase-root {
+  margin-left: 0;
+}
+
+.bookSta {
+  width: 100%;
+  max-width: 600px;
+  margin: 20px auto 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.bookSta label {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 1rem;
+}
+.bookSta label span {
+  font-weight: bold;
+}

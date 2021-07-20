@@ -24,10 +24,12 @@ export default function Step_3({ formData, setForm, navigation, progress }) {
         let readyMade = data.filter((i) => i.custom === 0);
         setReadyMade(readyMade);
         let custom = data.filter((i) => i.custom === 1);
-        // if (!formData.step_1.order_number) {
-        //   formData.custom = createObject(custom);
-        //   formData.ready_made = createObject(readyMade);
-        // }
+        if (!formData.step_1.order_number) {
+          formData.custom = createObject(custom);
+          formData.ready_made = createObject(readyMade);
+        } else {
+          console.log(formData);
+        }
         setCustom(custom);
         setShowOptions(true);
       } else {
@@ -135,7 +137,7 @@ export default function Step_3({ formData, setForm, navigation, progress }) {
                         <label
                           htmlFor={`ready_made.${j._id}`}
                           style={{
-                            backgroundImage: `url(${process.env.REACT_APP_BACKEND_URL}/uploads/${j.image})`,
+                            backgroundImage: `url(${window.APIPATH}/uploads/${j.image})`,
                           }}
                         >
                           {j.title} <div className="overley" />

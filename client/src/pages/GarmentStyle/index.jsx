@@ -3,7 +3,8 @@ import PageTitle from "../../components/PageTitle/PageTitle";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import { useHistory } from "react-router-dom";
-
+import { confirmAlert } from "react-confirm-alert"; // Import
+import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
@@ -16,6 +17,9 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
+import IconButton from "@material-ui/core/IconButton";
+import EditIcon from "@material-ui/icons/Edit";
+import DeleteIcon from "@material-ui/icons/Delete";
 import {
   getGarmentStyleList,
   getGarmentList,
@@ -175,6 +179,24 @@ export default function GarmentStyle() {
     setTitle("");
     setSelectedGarments([]);
     setStyleType(0);
+  };
+
+  //delete garment
+  const styleDelete = (row) => {
+    confirmAlert({
+      title: "Confirm to delete. ",
+      message: "Are you sure to do this.",
+      buttons: [
+        {
+          label: "Yes",
+          onClick: onclose,
+        },
+        {
+          label: "No",
+          onClick: onclose,
+        },
+      ],
+    });
   };
 
   const [error, setError] = useState("");
@@ -360,10 +382,22 @@ export default function GarmentStyle() {
                               );
                             })}
                             <div>
-                              <p onClick={() => openEditBox(row)}>Edit</p>
-                              <p onClick={() => console.log("delete", row)}>
+                              {/* <p onClick={() => openEditBox(row)}>Edit</p> */}
+                              <IconButton
+                                onClick={() => openEditBox(row)}
+                                aria-label="edit"
+                              >
+                                <EditIcon />
+                              </IconButton>
+                              <IconButton
+                                onClick={() => styleDelete(row)}
+                                aria-label="delete"
+                              >
+                                <DeleteIcon />
+                              </IconButton>
+                              {/* <p onClick={() => console.log("delete", row)}>
                                 Delete
-                              </p>
+                              </p> */}
                             </div>
                           </TableRow>
                         );

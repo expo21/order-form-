@@ -12,17 +12,92 @@ import IconButton from "@material-ui/core/IconButton";
 import EditIcon from "@material-ui/icons/Edit";
 import axios from "axios";
 import { updateOrder } from "../../../helper/helperFunctions";
-export default function Review({ formData, navigation, progress }) {
+import { withStyles, makeStyles } from "@material-ui/core/styles";
+import FormGroup from "@material-ui/core/FormGroup";
+// import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Switch from "@material-ui/core/Switch";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import InputLabel from "@material-ui/core/InputLabel";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
+
+const useStyles = makeStyles((theme) => ({
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
+}));
+const AntSwitch = withStyles((theme) => ({
+  root: {
+    width: 28,
+    height: 16,
+    padding: 0,
+    display: "flex",
+  },
+  switchBase: {
+    padding: 2,
+    color: theme.palette.grey[500],
+    "&$checked": {
+      transform: "translateX(12px)",
+      color: theme.palette.common.white,
+      "& + $track": {
+        opacity: 1,
+        backgroundColor: "#536DFE",
+        borderColor: "#536DFE",
+      },
+    },
+  },
+  thumb: {
+    width: 12,
+    height: 12,
+    boxShadow: "none",
+  },
+  track: {
+    border: `1px solid ${theme.palette.grey[500]}`,
+    borderRadius: 16 / 2,
+    opacity: 1,
+    backgroundColor: theme.palette.common.white,
+  },
+  checked: {},
+}))(Switch);
+
+export default function Review({ formData, setForm, navigation, progress }) {
+  const classes = useStyles();
+  const [state, setState] = React.useState({
+    checkedC: true,
+  });
+
+  const handleChangeSelect = (event) => {
+    console.log(event.target);
+    setForm(event);
+  };
+
+  const handleChangeSwitch = (event) => {
+    console.log(event.target.name, event.target.value);
+    if (event.target.value == 1) {
+      console.log("sjgjsf");
+      formData.status = 0;
+      console.log(formData);
+    }
+    if (event.target.value == 0) {
+      formData.status = 1;
+    }
+  };
+
   let history = useHistory();
-  console.log({ review: formData });
   const { go } = navigation;
   useEffect(() => {
     progress(100);
   }, []);
 
-  const editHandle = () => {
-    history.push(`/app/order/${formData.step_1.order_number}`);
-  };
+  // const editHandle = () => {
+  //   history.push(`/app/order/${formData.step_1.order_number}`);
+  // };
 
   let step_3_details = [];
   var custom_options;
@@ -58,7 +133,9 @@ export default function Review({ formData, navigation, progress }) {
     if (formData.step_1.order_number) {
       updateOrder(formData)
         .then((res) => {
-          console.log(res);
+          if (res) {
+            history.push("/app/orders/orderList");
+          }
         })
         .catch((err) => {
           console.log(err);
@@ -128,6 +205,63 @@ export default function Review({ formData, navigation, progress }) {
           })}
         />
       </div>
+      {formData.step_1.order_number && (
+        <>
+          {/* <div className="switchSec">
+            <FormGroup>
+              <Typography component="div">
+                <Grid
+                  component="label"
+                  container
+                  alignItems="center"
+                  spacing={1}
+                >
+                  <Grid item>Deactive</Grid>
+                  <Grid item>
+                    <AntSwitch
+                      checked={formData.status == 1}
+                      onChange={handleChangeSwitch}
+                      name="status"
+                      value={formData.status}
+                    />
+                  </Grid>
+                  <Grid item>Active</Grid>
+                </Grid>
+              </Typography>
+            </FormGroup>
+          </div> */}
+
+          <div className="bookSta">
+            <label>
+              Booking Status:{" "}
+              <span>
+                {formData.booking == 2
+                  ? "Approved"
+                  : formData.booking == 3
+                  ? "Completed"
+                  : "Pending"}
+              </span>
+            </label>
+            <FormControl variant="outlined" className={classes.formControl}>
+              <InputLabel htmlFor="outlined-age-native-simple">
+                Booking
+              </InputLabel>
+              <Select
+                native
+                name="booking"
+                value={formData.booking}
+                onChange={handleChangeSelect}
+                label="Booking"
+              >
+                <option value={1}>Pending</option>
+                <option value={2}>Approved</option>
+                <option value={3}>Completed</option>
+              </Select>
+            </FormControl>
+          </div>
+        </>
+      )}
+
       <div className="step_form-wrapper">
         <div className="form_footer">
           <Button onClick={() => navigation.previous()}>Back</Button>
