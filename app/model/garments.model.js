@@ -6,6 +6,7 @@ const GarmentSchema = mongoose.Schema(
     image: { type: String },
     gender: { type: String },
     status: { type: Number }, // 1 for active , 0 for inactive
+    deleted: { type: Boolean, default: false }, // true for deleted
   },
   {
     collection: "Garment_Type",

@@ -13,6 +13,7 @@ const OptionSchema = mongoose.Schema(
       { type: mongoose.Schema.Types.ObjectId, ref: "Garment_Type" },
     ],
     status: { type: Number }, // 1 for active , 0 for inactive
+    deleted: { type: Boolean, default: false },
   },
   {
     collection: "Options",

@@ -9,6 +9,7 @@ const StyleOptionSchema = mongoose.Schema(
     ],
     status: { type: Number }, // 1 for active , 0 for inactive
     custom: { type: Number }, // 1 for custom , 0 for not
+    deleted: { type: Boolean, default: false },
   },
   {
     collection: "Style_options",

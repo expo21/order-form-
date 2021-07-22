@@ -1,5 +1,6 @@
 const Garment = require("../model/garments.model");
 const StyleOptions = require("../model/StyleOptions.model");
+const Option = require("../model/Options.model.js");
 
 exports.createGarmentOption = async (dataObj) => {
   try {
@@ -10,7 +11,6 @@ exports.createGarmentOption = async (dataObj) => {
       status: 1,
     });
     let savedObj = await NewGarmentType.save();
-    console.log(savedObj);
     return savedObj;
   } catch (error) {
     console.log(error);
@@ -34,28 +34,68 @@ exports.garmetsByGender = async (gender) => {
 
 exports.getAllGarments = async () => {
   try {
-    let list = await Garment.find({});
+    let list = await Garment.find({ deleted: false });
     return list;
   } catch (error) {
     console.log(error);
   }
 };
 
-//remove Garment
-exports.removeGarment = async (id) => {
-  console.log(id);
-  try {
-    let removedItem = await Garment.findByIdAndRemove({ _id: id });
-    let getStyle = await StyleOptions.findOne({ garment_type: id });
+// //remove Garment
+// exports.removeGarment = async (id) => {
+//   try {
+//     let updateItem = await Garment.findByIdAndUpdate(
+//       { _id: id },
+//       {
+//         $set: {
+//           status: 0,
+//         },
+//       },
+//       { new: true }
+//     );
+//     console.log(updateItem);
+//     let updateStyle = await StyleOptions.updateMany(
+//       {
+//         garment_type: updateItem._id,
+//       },
+//       {
+//         $pull: { garment_type: updateItem._id },
+//       }
+//     );
+//     if (updateStyle.ok === 1) {
+//       let updateOption = await Option.updateMany(
+//         { garment_type: updateItem._id },
+//         {
+//           $pull: {
+//             garment_type: updateItem._id,
+//           },
+//         }
+//       );
+//       if (updateOption.ok === 1) {
+//         return true;
+//       } else return false;
+//     } else {
+//       return false;
+//     }
+//   } catch (error) {
+//     if (error) {
+//       return false;
+//     }
+//   }
+// };
 
-    console.log(getStyle.garment_type);
-    console.log(getStyle.garment_type.filter((x) => x === id));
-    let newGarmentTypes = getStyle.garment_type.filter((x) => x === id);
-    let updateStyle = await StyleOptions.findOneAndUpdate(
-      { garment_type: id },
-      { $set: { garment_type: newGarmentTypes } }
+// remove garment
+exports.removeGarment = async (objId) => {
+  try {
+    let updatedItem = await Garment.updateOne(
+      { _id: objId },
+      {
+        $set: {
+          deleted: true,
+        },
+      }
     );
-    console.log(updateStyle);
-    return updatedStyle;
+    console.log({ updatedItem });
+    return updatedItem;
   } catch (error) {}
 };

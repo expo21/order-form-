@@ -1,9 +1,10 @@
 const express = require("express");
 const {
-  getAllAtyleOptionList,
+  getAllStyleOptions,
   addGramentToStyleOption,
   getStyleOptionByGarmentAndGender,
   updateStyleOption,
+  deleteStyle,
 } = require("../controller/styleOption.Controller");
 
 const router = express.Router();
@@ -59,7 +60,7 @@ router.get("/styleOptions/:garmentType/:gender", (req, res) => {
 });
 
 router.get("/styleOptions", (req, res) => {
-  getAllAtyleOptionList()
+  getAllStyleOptions()
     .then((result) => {
       res.send({ status: true, msg: "List Found", data: result });
     })
@@ -95,6 +96,11 @@ router.post("/updateStyles/:styleOption", (req, res) => {
       res.send({ status: false, message: "Something went wrong." });
     }
   });
+});
+
+//delete styleOption
+router.get("/deleteStyle/:styleId", (req, res) => {
+  deleteStyle().then().catch();
 });
 
 module.exports = router;

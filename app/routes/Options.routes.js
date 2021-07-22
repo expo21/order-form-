@@ -7,6 +7,7 @@ const {
   getAllOptionList,
   addGarmentToOptions,
   removeGarmentFromOption,
+  deleteOption,
 } = require("../controller/options.controller");
 
 const router = express.Router();
@@ -115,6 +116,21 @@ router.post("/options/removeGarmentFromOptions", (req, res) => {
         msg: "something went wrong.",
         data: [],
       });
+    });
+});
+
+//delete option
+router.get("/deleteOption/:optionId", (req, res) => {
+  deleteOption(req.params.optionId)
+    .then((result) => {
+      if (result) {
+        res.send({ status: true, message: "Option deleted." });
+      } else {
+        res.send({ status: false, message: "Something went wrong." });
+      }
+    })
+    .catch((error) => {
+      res.send({ status: false, message: "Something went wrong." });
     });
 });
 

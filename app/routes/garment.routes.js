@@ -86,9 +86,14 @@ router.get("/allGarments", (req, res) => {
 
 //delete garment
 router.get("/deleteGarment/:id", (req, res) => {
+  console.log("sdfchsshf", req.params.id);
   removeGarment(req.params.id)
     .then((result) => {
-      res.send({ status: true, message: "Item deleted.", data: result });
+      if (result) {
+        res.send({ status: true, message: "Item deleted.", data: result });
+      } else {
+        res.send({ status: false, message: "something went wrong." });
+      }
     })
     .catch((err) => {
       if (err) {

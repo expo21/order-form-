@@ -1,8 +1,9 @@
 const Options = require("../model/Options.model.js");
+const StyleOption = require("../model/StyleOptions.model.js");
 
 exports.getAllOptionList = async () => {
   try {
-    let list = await Options.find({})
+    let list = await Options.find({ deleted: false })
       .populate("style_option")
       .populate("garment_type");
     if (list.length > 0) {
@@ -38,5 +39,18 @@ exports.removeGarmentFromOption = async (objId, dataObj) => {
     else return false;
   } catch (error) {
     return false;
+  }
+};
+// delete option
+exports.deleteOption = async (optionId) => {
+  console.log(optionId);
+  try {
+    let updatedOption = await Options.updateOne(
+      { _id: objId },
+      { $set: { deleted: true } }
+    );
+    console.log(updatedOption);
+  } catch (error) {
+    console.log(error);
   }
 };

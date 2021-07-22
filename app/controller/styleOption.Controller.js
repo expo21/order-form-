@@ -2,9 +2,9 @@ const StyleOption = require("../model/StyleOptions.model");
 const GarmentType = require("../model/garments.model");
 const Options = require("../model/Options.model");
 
-exports.getAllAtyleOptionList = async () => {
+exports.getAllStyleOptions = async () => {
   try {
-    let list = await StyleOption.find({})
+    let list = await StyleOption.find({ deleted: false })
       .populate("options")
       .populate("garment_type");
     console.log(list);
@@ -16,12 +16,51 @@ exports.getAllAtyleOptionList = async () => {
   }
 };
 
+// exports.getAllStyleOptions = async () => {
+//   try {
+//     let list = await StyleOption.aggregate([
+//       { $match: { deleted: false } },
+//       {
+//         $lookup: {
+//           from: "Options",
+
+//           pipeline: [{ $match: { $expr: { deleted: false } } }],
+//           as: "Options",
+//         },
+//       },
+//       {
+//         $lookup: {
+//           from: "Garment_Type",
+//           let: { style_id: "$garment_type" },
+//           pipeline: [
+//             {
+//               $match: {
+//                 $expr: {
+//                   $and: [
+//                     {$eq : []}
+//                   ]
+//                 },
+//               },
+//             },
+//           ],
+//           as: "Garment_Type",
+//         },
+//       },
+//     ]);
+//     console.log({ liststs: list });
+//     return list;
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
+
 //getStyleOptionByGarmentAndGender
 exports.getStyleOptionByGarmentAndGender = async (garment, gender) => {
   try {
     let garment_id = await GarmentType.findOne(
       {
         $and: [{ title: garment }, { gender: gender }],
+        status: 1,
       },
       { _id: 1 }
     );
@@ -30,6 +69,7 @@ exports.getStyleOptionByGarmentAndGender = async (garment, gender) => {
     let styleOptions = await StyleOption.find(
       {
         garment_type: garmentId,
+        status: 1,
       },
       {
         options: 1,
