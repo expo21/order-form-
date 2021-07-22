@@ -42,6 +42,7 @@ router.post("/garmentType", upload.single("image"), (req, res) => {
     title: req.body.title,
     gender: req.body.gender,
     image: req.file.filename,
+    deleted: false,
   };
   createGarmentOption(dataObj)
     .then((result) => {
