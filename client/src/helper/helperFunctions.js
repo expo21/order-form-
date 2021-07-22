@@ -144,7 +144,9 @@ export const getStyleOptionsByGarmentType = async (garment_type, gender) => {
 //delete garment
 export const deleteGarment = async (obj) => {
   try {
-    let response = await axios.get(`${window.APIPATH}/api/styleOptions/`);
+    let response = await axios.get(
+      `${window.APIPATH}/api/deleteGarment/${obj._id}`
+    );
     if (response.data.status) {
       return response.data.data;
     } else {

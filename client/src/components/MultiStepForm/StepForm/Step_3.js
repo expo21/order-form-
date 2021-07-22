@@ -97,8 +97,6 @@ export default function Step_3({ formData, setForm, navigation, progress }) {
   };
 
   const somethingHappen = (e) => {
-    console.log(e.target);
-    console.log("sdfgsdufg");
     setForm(e);
   };
 
@@ -110,44 +108,46 @@ export default function Step_3({ formData, setForm, navigation, progress }) {
         <div>
           {/* Ready Made Style */}
           {readyMade.map((i, index) => {
-            return (
-              <div key={index} className="step_form-wrapper">
-                <h3 className="selection_subheading">{i.title}</h3>
-                <div className="selection_wrap grid4col">
-                  {i.options.map((j) => {
-                    return (
-                      // <Radio
-                      //   option={j}
-                      //   name={`ready_made.${i.title.toLowerCase()}`}
-                      //   checked={formData.ready_made[i.title.toLowerCase()]}
-                      //   setForm={setForm}
-                      // />
-                      <div key={j._id} className={j.input_type}>
-                        <input
-                          type={j.input_type}
-                          id={`ready_made.${j._id}`}
-                          value={j.title.toLowerCase()}
-                          name={`ready_made.${i.title.toLowerCase()}`}
-                          checked={
-                            formData.ready_made[i.title.toLowerCase()] ===
-                            j.title.toLowerCase()
-                          }
-                          onChange={(e) => somethingHappen(e)}
-                        />{" "}
-                        <label
-                          htmlFor={`ready_made.${j._id}`}
-                          style={{
-                            backgroundImage: `url(${window.APIPATH}/uploads/${j.image})`,
-                          }}
-                        >
-                          {j.title} <div className="overley" />
-                        </label>
-                      </div>
-                    );
-                  })}
+            if (i.options.length > 0) {
+              return (
+                <div key={index} className="step_form-wrapper">
+                  <h3 className="selection_subheading">{i.title}</h3>
+                  <div className="selection_wrap grid4col">
+                    {i.options.map((j) => {
+                      return (
+                        // <Radio
+                        //   option={j}
+                        //   name={`ready_made.${i.title.toLowerCase()}`}
+                        //   checked={formData.ready_made[i.title.toLowerCase()]}
+                        //   setForm={setForm}
+                        // />
+                        <div key={j._id} className={j.input_type}>
+                          <input
+                            type={j.input_type}
+                            id={`ready_made.${j._id}`}
+                            value={j.title.toLowerCase()}
+                            name={`ready_made.${i.title.toLowerCase()}`}
+                            checked={
+                              formData.ready_made[i.title.toLowerCase()] ===
+                              j.title.toLowerCase()
+                            }
+                            onChange={(e) => somethingHappen(e)}
+                          />{" "}
+                          <label
+                            htmlFor={`ready_made.${j._id}`}
+                            style={{
+                              backgroundImage: `url(${window.APIPATH}/uploads/${j.image})`,
+                            }}
+                          >
+                            {j.title} <div className="overley" />
+                          </label>
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>
-            );
+              );
+            }
           })}
           {/* Options for choose style type / Ready made or custom */}
           <div className="step_form-wrapper">
@@ -199,192 +199,194 @@ export default function Step_3({ formData, setForm, navigation, progress }) {
           {/* custom styles */}
           {formData.step_3.garment_style === "custom" &&
             custom.map((i, index) => {
-              return (
-                <div key={index} className="step_form-wrapper">
-                  <h3 className="selection_subheading">{i.title}</h3>
-                  <div className="selection_wrap grid4col">
-                    {i.options.map((j) => {
-                      // if radio buttons are there
-                      if (j.input_type === "radio") {
-                        return (
-                          // <Radio
-                          //   option={j}
-                          //   name={`custom.${stringTo(i.title)}`}
-                          //   checked={formData.custom[stringTo(i.title)]}
-                          //   setForm={(e) => console.log(e.target)}
-                          // />
-                          <div key={j._id} className={j.input_type}>
-                            <input
-                              type={j.input_type}
-                              id={`custom.${j._id}`}
-                              value={j.title.toLowerCase()}
-                              name={`custom.${stringTo(i.title)}`}
-                              checked={
-                                formData.custom[stringTo(i.title)] ===
-                                j.title.toLowerCase()
-                              }
-                              onChange={(e) => somethingHappen(e)}
-                            />{" "}
-                            <label
-                              htmlFor={`custom.${j._id}`}
-                              style={{
-                                backgroundImage: `url(${process.env.REACT_APP_BACKEND_URL}/uploads/${j.image})`,
-                              }}
-                            >
-                              {j.title} <div className="overley" />
-                            </label>
-                          </div>
-                        );
-                      }
-                      // if (j.input_type === "checkbox") {
-                      //   return (
-                      //     <div key={j._id} className="checkbox">
-                      //       <input
-                      //         type="checkbox"
-                      //         id={`${i.title.split(" ").join("_")}_${j.title}`}
-                      //         value={j.title}
-                      //         name={`custom.${i.title.split(" ").join("_")}`}
-                      //         onChange={(e) => onChecked(e)}
-                      //         checked={
-                      //           formData.custom[
-                      //             i.title.toLowerCase().split(" ").join("_")
-                      //           ]
-                      //         }
-                      //       />
-                      //       <label
-                      //         htmlFor={`${i.title.split(" ").join("_")}_${
-                      //           j.title
-                      //         }`}
-                      //       >
-                      //         {j.title}
-                      //         <div className="overley" />
-                      //       </label>
-                      //       {console.log(formData.custom)}
-                      //       {formData.custom[i.title.split(" ").join("_")] && (
-                      //         <input
-                      //           type="text"
-                      //           name={`step_3.custom.monogram_text.${i
-                      //             .split(" ")
-                      //             .join("_")}`}
-                      //           value={
-                      //             formData.step_3.custom.monogram_text[
-                      //               i.split(" ").join("_")
-                      //             ]
-                      //           }
-                      //           maxLength="8"
-                      //           onChange={setForm}
-                      //           style={{ display: "block" }}
-                      //         />
-                      //       )}
-                      //     </div>
-                      //   );
-                      // }
-                      // if (j.input_type === "text") {
-                      //   return (
-                      // <div className="step_form-wrapper">
-                      //   <h3 className="selection_subheading">{i.title}</h3>
-                      //   <div>
-                      //     <input
-                      //       type="text"
-                      //       value={
-                      //         formData.custom[i.title.split(" ").join("_")]
-                      //       }
-                      //       name={`custom.${i.title.split(" ").join("_")}`}
-                      //       onChange={setForm}
-                      //       autoComplete="off"
-                      //     />
-                      //   </div>
-                      // </div>
-                      // <div className="emptyDiv">
-                      //   <div className="checkbox">
-                      //     {/* <input
-                      //       type="checkbox"
-                      //       id={`${i.title.split(" ").join("_")}.${j.title
-                      //         .split(" ")
-                      //         .join("_")}`}
-                      //       value={
-                      //         checkedData[
-                      //           `custom.${i.title
-                      //             .split(" ")
-                      //             .join("_")}.${j.title
-                      //             .split(" ")
-                      //             .join("_")}`
-                      //         ]
-                      //       }
-                      //       name={`custom.${i.title
-                      //         .split(" ")
-                      //         .join("_")}.${j.title.split(" ").join("_")}`}
-                      //       onChange={(e) => handleChnage(e)}
-                      //     /> */}
-                      //     <input
-                      //       type="checkbox"
-                      //       id={`${stringTo(i.title)}.${stringTo(j.title)}`}
-                      //       name={`${stringTo(i.title)}.${stringTo(
-                      //         j.title
-                      //       )}`}
-                      //       onChange={(e) => onChecked(e, j)}
-                      //       value={j.title}
-                      //       checked={
-                      //         formData.custom[stringTo(i.title)] === j.title
-                      //       }
-                      //     />
-                      //     <label
-                      //       htmlFor={`${stringTo(i.title)}.${stringTo(
-                      //         j.title
-                      //       )}`}
-                      //     >
-                      //       {j.title}
-                      //       <div className="overley"></div>
-                      //     </label>
-                      //   </div>
-                      //     <div>
-                      //       <input
-                      //         type="text"
-                      //         name={`${i.title.split(" ").join("_")}.${j.title
-                      //           .split(" ")
-                      //           .join("_")}`}
-                      //         value={
-                      //           formData.custom[stringTo(i.title)][
-                      //             stringTo(j.title)
-                      //           ]
-                      //         }
-                      //         onChange={setForm}
-                      //       />
-                      //     </div>
-                      //     // </div>
-                      //   );
-                      // }
+              if (i.options.length > 0) {
+                return (
+                  <div key={index} className="step_form-wrapper">
+                    <h3 className="selection_subheading">{i.title}</h3>
+                    <div className="selection_wrap grid4col">
+                      {i.options.map((j) => {
+                        // if radio buttons are there
+                        if (j.input_type === "radio") {
+                          return (
+                            // <Radio
+                            //   option={j}
+                            //   name={`custom.${stringTo(i.title)}`}
+                            //   checked={formData.custom[stringTo(i.title)]}
+                            //   setForm={(e) => console.log(e.target)}
+                            // />
+                            <div key={j._id} className={j.input_type}>
+                              <input
+                                type={j.input_type}
+                                id={`custom.${j._id}`}
+                                value={j.title.toLowerCase()}
+                                name={`custom.${stringTo(i.title)}`}
+                                checked={
+                                  formData.custom[stringTo(i.title)] ===
+                                  j.title.toLowerCase()
+                                }
+                                onChange={(e) => somethingHappen(e)}
+                              />{" "}
+                              <label
+                                htmlFor={`custom.${j._id}`}
+                                style={{
+                                  backgroundImage: `url(${process.env.REACT_APP_BACKEND_URL}/uploads/${j.image})`,
+                                }}
+                              >
+                                {j.title} <div className="overley" />
+                              </label>
+                            </div>
+                          );
+                        }
+                        // if (j.input_type === "checkbox") {
+                        //   return (
+                        //     <div key={j._id} className="checkbox">
+                        //       <input
+                        //         type="checkbox"
+                        //         id={`${i.title.split(" ").join("_")}_${j.title}`}
+                        //         value={j.title}
+                        //         name={`custom.${i.title.split(" ").join("_")}`}
+                        //         onChange={(e) => onChecked(e)}
+                        //         checked={
+                        //           formData.custom[
+                        //             i.title.toLowerCase().split(" ").join("_")
+                        //           ]
+                        //         }
+                        //       />
+                        //       <label
+                        //         htmlFor={`${i.title.split(" ").join("_")}_${
+                        //           j.title
+                        //         }`}
+                        //       >
+                        //         {j.title}
+                        //         <div className="overley" />
+                        //       </label>
+                        //       {console.log(formData.custom)}
+                        //       {formData.custom[i.title.split(" ").join("_")] && (
+                        //         <input
+                        //           type="text"
+                        //           name={`step_3.custom.monogram_text.${i
+                        //             .split(" ")
+                        //             .join("_")}`}
+                        //           value={
+                        //             formData.step_3.custom.monogram_text[
+                        //               i.split(" ").join("_")
+                        //             ]
+                        //           }
+                        //           maxLength="8"
+                        //           onChange={setForm}
+                        //           style={{ display: "block" }}
+                        //         />
+                        //       )}
+                        //     </div>
+                        //   );
+                        // }
+                        // if (j.input_type === "text") {
+                        //   return (
+                        // <div className="step_form-wrapper">
+                        //   <h3 className="selection_subheading">{i.title}</h3>
+                        //   <div>
+                        //     <input
+                        //       type="text"
+                        //       value={
+                        //         formData.custom[i.title.split(" ").join("_")]
+                        //       }
+                        //       name={`custom.${i.title.split(" ").join("_")}`}
+                        //       onChange={setForm}
+                        //       autoComplete="off"
+                        //     />
+                        //   </div>
+                        // </div>
+                        // <div className="emptyDiv">
+                        //   <div className="checkbox">
+                        //     {/* <input
+                        //       type="checkbox"
+                        //       id={`${i.title.split(" ").join("_")}.${j.title
+                        //         .split(" ")
+                        //         .join("_")}`}
+                        //       value={
+                        //         checkedData[
+                        //           `custom.${i.title
+                        //             .split(" ")
+                        //             .join("_")}.${j.title
+                        //             .split(" ")
+                        //             .join("_")}`
+                        //         ]
+                        //       }
+                        //       name={`custom.${i.title
+                        //         .split(" ")
+                        //         .join("_")}.${j.title.split(" ").join("_")}`}
+                        //       onChange={(e) => handleChnage(e)}
+                        //     /> */}
+                        //     <input
+                        //       type="checkbox"
+                        //       id={`${stringTo(i.title)}.${stringTo(j.title)}`}
+                        //       name={`${stringTo(i.title)}.${stringTo(
+                        //         j.title
+                        //       )}`}
+                        //       onChange={(e) => onChecked(e, j)}
+                        //       value={j.title}
+                        //       checked={
+                        //         formData.custom[stringTo(i.title)] === j.title
+                        //       }
+                        //     />
+                        //     <label
+                        //       htmlFor={`${stringTo(i.title)}.${stringTo(
+                        //         j.title
+                        //       )}`}
+                        //     >
+                        //       {j.title}
+                        //       <div className="overley"></div>
+                        //     </label>
+                        //   </div>
+                        //     <div>
+                        //       <input
+                        //         type="text"
+                        //         name={`${i.title.split(" ").join("_")}.${j.title
+                        //           .split(" ")
+                        //           .join("_")}`}
+                        //         value={
+                        //           formData.custom[stringTo(i.title)][
+                        //             stringTo(j.title)
+                        //           ]
+                        //         }
+                        //         onChange={setForm}
+                        //       />
+                        //     </div>
+                        //     // </div>
+                        //   );
+                        // }
 
-                      // <div key={j._id} className={j.input_type}>
-                      //   <input
-                      //     type={j.input_type}
-                      //     id={j._id}
-                      //     value={j.title}
-                      //     name={`custom.${i.title
-                      //       .toLowerCase()
-                      //       .split(" ")
-                      //       .join("_")}`}
-                      //     onChange={setForm}
-                      //     checked={
-                      //       formData.custom[
-                      //         i.title.toLowerCase().split(" ").join("_")
-                      //       ] === j.title
-                      //     }
-                      //   />
+                        // <div key={j._id} className={j.input_type}>
+                        //   <input
+                        //     type={j.input_type}
+                        //     id={j._id}
+                        //     value={j.title}
+                        //     name={`custom.${i.title
+                        //       .toLowerCase()
+                        //       .split(" ")
+                        //       .join("_")}`}
+                        //     onChange={setForm}
+                        //     checked={
+                        //       formData.custom[
+                        //         i.title.toLowerCase().split(" ").join("_")
+                        //       ] === j.title
+                        //     }
+                        //   />
 
-                      //   <label
-                      //     htmlFor={j._id}
-                      //     style={{
-                      //       backgroundImage: `url(${window.APIPATH}/uploads/${j.image})`,
-                      //     }}
-                      //   >
-                      //     {j.title} <div className="overley" />
-                      //   </label>
-                      // </div>
-                    })}
+                        //   <label
+                        //     htmlFor={j._id}
+                        //     style={{
+                        //       backgroundImage: `url(${window.APIPATH}/uploads/${j.image})`,
+                        //     }}
+                        //   >
+                        //     {j.title} <div className="overley" />
+                        //   </label>
+                        // </div>
+                      })}
+                    </div>
                   </div>
-                </div>
-              );
+                );
+              }
             })}
           <div className="step_form-wrapper">
             <div className="form_footer">

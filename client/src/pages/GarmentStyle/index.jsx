@@ -242,6 +242,7 @@ export default function GarmentStyle() {
             if (response) {
               handleClose();
               setState(true);
+              setSelectedGarments([]);
             }
           })
           .catch((error) => console.log(error));
