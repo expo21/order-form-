@@ -182,6 +182,14 @@ export default function AddGarment() {
         sort: true,
       },
     },
+    {
+      name: "action",
+      label: "Actions",
+      options: {
+        filter: false,
+        sort: false,
+      },
+    },
   ];
 
   const genders = [
@@ -355,29 +363,27 @@ export default function AddGarment() {
                                       alt={value}
                                       src={`${window.APIPATH}/uploads/${value}`}
                                     />
+                                  ) : column.name === "action" ? (
+                                    <div>
+                                      <IconButton
+                                        onClick={() => openEditBox(row)}
+                                        aria-label="edit"
+                                      >
+                                        <EditIcon />
+                                      </IconButton>
+                                      <IconButton
+                                        onClick={() => garmentDelete(row)}
+                                        aria-label="delete"
+                                      >
+                                        <DeleteIcon />
+                                      </IconButton>
+                                    </div>
                                   ) : (
                                     value
                                   )}
                                 </TableCell>
                               );
                             })}
-
-                            <div>
-                              {/* <p onClick={() => deleteGarment(row)}>Edit</p>
-                              <p onClick={() => garmentDelete(row)}>Delete</p> */}
-                              <IconButton
-                                onClick={() => openEditBox(row)}
-                                aria-label="edit"
-                              >
-                                <EditIcon />
-                              </IconButton>
-                              <IconButton
-                                onClick={() => garmentDelete(row)}
-                                aria-label="delete"
-                              >
-                                <DeleteIcon />
-                              </IconButton>
-                            </div>
                           </TableRow>
                         );
                       })}

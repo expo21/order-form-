@@ -19,9 +19,13 @@ export default function Step_3({ formData, setForm, navigation, progress }) {
       formData.step_2.garment_type,
       formData.step_1.gender
     ).then((data) => {
+      console.log({ data });
       setApiData(data);
+
       if (data.length > 0) {
         let readyMade = data.filter((i) => i.custom === 0);
+        console.log({ readyMade });
+
         setReadyMade(readyMade);
         let custom = data.filter((i) => i.custom === 1);
         if (!formData.step_1.order_number) {
@@ -30,6 +34,8 @@ export default function Step_3({ formData, setForm, navigation, progress }) {
         } else {
           console.log(formData);
         }
+        console.log({ custom });
+
         setCustom(custom);
         setShowOptions(true);
       } else {
@@ -99,9 +105,6 @@ export default function Step_3({ formData, setForm, navigation, progress }) {
   const somethingHappen = (e) => {
     setForm(e);
   };
-
-  console.log(formData);
-  console.log({ readyMade }, { custom });
   return (
     <div>
       {showOptions ? (
@@ -144,6 +147,15 @@ export default function Step_3({ formData, setForm, navigation, progress }) {
                         </div>
                       );
                     })}
+                  </div>
+                </div>
+              );
+            } else {
+              return (
+                <div key={index} className="step_form-wrapper">
+                  <h3 className="selection_subheading">{i.title}</h3>
+                  <div className="selection_wrap grid4col">
+                    <p>Please add some options for this style.</p>
                   </div>
                 </div>
               );
@@ -383,6 +395,15 @@ export default function Step_3({ formData, setForm, navigation, progress }) {
                         //   </label>
                         // </div>
                       })}
+                    </div>
+                  </div>
+                );
+              } else {
+                return (
+                  <div key={index} className="step_form-wrapper">
+                    <h3 className="selection_subheading">{i.title}</h3>
+                    <div className="selection_wrap grid4col">
+                      <p>Please add some options for this style.</p>
                     </div>
                   </div>
                 );

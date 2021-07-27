@@ -33,6 +33,7 @@ import {
   getGarmentList,
   getGarmentStyleList,
   getStyleOptionsList,
+  deleteStyleOption,
 } from "../../helper/helperFunctions";
 
 const useStyles = makeStyles((theme) => ({
@@ -156,6 +157,14 @@ const columns = [
       sort: true,
     },
   },
+  {
+    name: "actions",
+    label: "Action",
+    options: {
+      filter: false,
+      sort: false,
+    },
+  },
 ];
 
 export default function StyleOptions() {
@@ -202,6 +211,7 @@ export default function StyleOptions() {
 
   //table
 
+  //submit data
   const handleSubmit = () => {
     const newOption = {
       title,
@@ -228,7 +238,6 @@ export default function StyleOptions() {
       setError("");
       addOption(formData)
         .then((response) => {
-          console.log(response);
           handleClose();
           setState(true);
         })
@@ -236,10 +245,18 @@ export default function StyleOptions() {
     }
   };
 
+  //open edit box
+  const openEditBox = async (row) => {
+    setOpen(true);
+    setTitle(row.title);
+    setInput_type(row.input_type);
+  };
+
   //fetch all options
   const fetchAllOptions = () => {
     getStyleOptionsList()
       .then((response) => {
+        console.log({ response });
         if (response.length > 0) {
           setOptionList(response);
         } else setOptionList([]);
@@ -263,7 +280,6 @@ export default function StyleOptions() {
     getGarmentList()
       .then((response) => {
         if (response.length > 0) {
-          console.log(response);
           setAllGarments(response);
         } else {
           setAllGarments([]);
@@ -273,17 +289,24 @@ export default function StyleOptions() {
   };
 
   const printArray = (arr) => {
-    console.log({ arr });
-    let iterator = arr.values();
-    for (let elements of iterator) {
-      return elements.title;
-    }
+    return arr.map((x) => {
+      if (x.style_option) {
+        return <div key={x.title}>{x.title} </div>;
+      } else {
+        return (
+          <div key={x.title}>
+            {x.title} | {x.gender}
+          </div>
+        );
+      }
+    });
   };
 
   useEffect(() => {
     fetchAllOptions();
     fetchAllStyleOptions();
     fetchAllGarment();
+    setState(false);
   }, [state]);
 
   //delete garment
@@ -294,7 +317,7 @@ export default function StyleOptions() {
       buttons: [
         {
           label: "Yes",
-          onClick: onclose,
+          onClick: () => deleteOption(row),
         },
         {
           label: "No",
@@ -302,6 +325,13 @@ export default function StyleOptions() {
         },
       ],
     });
+  };
+
+  const deleteOption = async (row) => {
+    let response = await deleteStyleOption(row);
+    if (response.status) {
+      setState(!state);
+    }
   };
 
   return (
@@ -378,32 +408,27 @@ export default function StyleOptions() {
                                       alt={value}
                                       src={`${window.APIPATH}/uploads/${value}`}
                                     />
+                                  ) : column.name === "actions" ? (
+                                    <div>
+                                      <IconButton
+                                        onClick={() => openEditBox(row)}
+                                        aria-label="edit"
+                                      >
+                                        <EditIcon />
+                                      </IconButton>
+                                      <IconButton
+                                        onClick={() => optionDelete(row)}
+                                        aria-label="delete"
+                                      >
+                                        <DeleteIcon />
+                                      </IconButton>
+                                    </div>
                                   ) : (
                                     value
                                   )}
                                 </TableCell>
                               );
                             })}
-                            <div>
-                              {/* <p onClick={() => console.log(row, "edit")}>
-                                Edit
-                              </p>
-                              <p onClick={() => console.log("delete", row)}>
-                                Delete
-                              </p> */}
-                              <IconButton
-                                onClick={() => console.log(row, "edit")}
-                                aria-label="edit"
-                              >
-                                <EditIcon />
-                              </IconButton>
-                              <IconButton
-                                onClick={() => optionDelete(row)}
-                                aria-label="delete"
-                              >
-                                <DeleteIcon />
-                              </IconButton>
-                            </div>
                           </TableRow>
                         );
                       })}

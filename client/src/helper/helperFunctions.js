@@ -61,6 +61,7 @@ export const getStyleOptionsList = async () => {
     if (response.data.status) {
       return response.data.data;
     }
+    return [];
   } catch (error) {
     console.log(error);
   }
@@ -177,5 +178,22 @@ export const updateOrder = async (obj) => {
     return response.data.status;
   } catch (error) {
     return false;
+  }
+};
+
+//delete option style
+
+export const deleteStyleOption = async (obj) => {
+  try {
+    let response = await axios.get(
+      `${window.APIPATH}/api/deleteOption/${obj._id}`
+    );
+    if (response.data.status) {
+      return response.data;
+    } else {
+      return response.data;
+    }
+  } catch (error) {
+    console.log(error);
   }
 };

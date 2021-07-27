@@ -34,7 +34,12 @@ import {
   useLayoutDispatch,
   toggleSidebar,
 } from "../../context/LayoutContext";
-import { useUserDispatch, signOut } from "../../context/UserContext";
+import {} from "../../context/UserContext";
+import {
+  useUserDispatch,
+  useUserState,
+  signOut,
+} from "../../context/UserContext";
 
 const messages = [
   {
@@ -96,7 +101,7 @@ export default function Header(props) {
   var layoutState = useLayoutState();
   var layoutDispatch = useLayoutDispatch();
   var userDispatch = useUserDispatch();
-
+  var userState = useUserState();
   // local
   var [mailMenu, setMailMenu] = useState(null);
   var [isMailsUnread, setIsMailsUnread] = useState(true);
@@ -177,8 +182,8 @@ export default function Header(props) {
           >
             <NotificationsIcon classes={{ root: classes.headerIcon }} />
           </Badge>
-        </IconButton>
-        <IconButton
+        </IconButton> */}
+        {/* <IconButton
           color="inherit"
           aria-haspopup="true"
           aria-controls="mail-menu"
@@ -204,7 +209,7 @@ export default function Header(props) {
         >
           <AccountIcon classes={{ root: classes.headerIcon }} />
         </IconButton>
-        {/* <Menu
+        <Menu
           id="mail-menu"
           open={Boolean(mailMenu)}
           anchorEl={mailMenu}
@@ -258,8 +263,8 @@ export default function Header(props) {
             Send New Message
             <SendIcon className={classes.sendButtonIcon} />
           </Fab>
-        </Menu> */}
-        {/*  <Menu
+        </Menu>
+        <Menu
           id="notifications-menu"
           open={Boolean(notificationsMenu)}
           anchorEl={notificationsMenu}
@@ -276,8 +281,7 @@ export default function Header(props) {
               <Notification {...notification} typographyVariant="inherit" />
             </MenuItem>
           ))}
-        </Menu>{" "}
-        */}
+        </Menu>
         <Menu
           id="profile-menu"
           open={Boolean(profileMenu)}
@@ -289,7 +293,7 @@ export default function Header(props) {
         >
           <div className={classes.profileMenuUser}>
             <Typography variant="h4" weight="medium">
-              John
+              {userState.name}
             </Typography>
           </div>
           <MenuItem

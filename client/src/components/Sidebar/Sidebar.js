@@ -31,16 +31,12 @@ import {
 } from "../../context/LayoutContext";
 
 function Sidebar({ location }) {
-  console.log(localStorage.getItem("auth-token"));
-
   var structure = [];
   let token = localStorage.getItem("auth-token");
 
-  // let isAdmin = JSON.parse(atob(token.split(".")[1]));
   var isAdmin = { userType: 2 };
   if (token !== null) {
     isAdmin = JSON.parse(atob(token.split(".")[1]));
-    console.log(isAdmin);
   }
 
   if (isAdmin?.userType === 1) {

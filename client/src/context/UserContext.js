@@ -10,6 +10,7 @@ function userReducer(state, action) {
       return {
         ...state,
         isAuthenticated: true,
+        name: action.payload,
       };
     case "SIGN_OUT_SUCCESS":
       return { ...state, isAuthenticated: false };
@@ -57,9 +58,6 @@ export { UserProvider, useUserState, useUserDispatch, loginUser, signOut };
 function loginUser(dispatch, email, password, history, setIsLoading, setError) {
   setError(false);
   setIsLoading(true);
-
-  console.log(process.env.REACT_APP_BACKEND_URL);
-
   if (!!email && !!password) {
     axios
       .post(`${window.APIPATH}/api/login`, {
@@ -72,7 +70,7 @@ function loginUser(dispatch, email, password, history, setIsLoading, setError) {
           localStorage.setItem("auth-token", data.token);
           setError("");
           setIsLoading(false);
-          dispatch({ type: "LOGIN_SUCCESS" });
+          dispatch({ type: "LOGIN_SUCCESS", payload: "name" });
 
           history.push("/app/dashboard");
         } else {

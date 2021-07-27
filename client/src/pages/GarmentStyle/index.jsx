@@ -54,6 +54,8 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
     width: "400px",
+    height: "500px",
+    overflow: "auto",
   },
   input: {
     display: "none",
@@ -152,6 +154,14 @@ const columns = [
     options: {
       filter: true,
       sort: true,
+    },
+  },
+  {
+    name: "action",
+    label: "Action",
+    options: {
+      filter: false,
+      sort: false,
     },
   },
 ];
@@ -314,7 +324,6 @@ export default function GarmentStyle() {
     setTitle(row.title);
     setStyleType(row.custom);
   };
-  console.log({ editData });
   return (
     <>
       <PageTitle
@@ -372,34 +381,33 @@ export default function GarmentStyle() {
                                   align={column.align}
                                   onClick={() => console.log(row)}
                                 >
-                                  {Array.isArray(value)
-                                    ? printArray(value)
-                                    : column.name === "custom"
-                                    ? printChooseStyle(value)
-                                    : column.name === "status"
-                                    ? printStatus(value)
-                                    : value}
+                                  {Array.isArray(value) ? (
+                                    printArray(value)
+                                  ) : column.name === "custom" ? (
+                                    printChooseStyle(value)
+                                  ) : column.name === "status" ? (
+                                    printStatus(value)
+                                  ) : column.name === "action" ? (
+                                    <div>
+                                      <IconButton
+                                        onClick={() => openEditBox(row)}
+                                        aria-label="edit"
+                                      >
+                                        <EditIcon />
+                                      </IconButton>
+                                      <IconButton
+                                        onClick={() => styleDelete(row)}
+                                        aria-label="delete"
+                                      >
+                                        <DeleteIcon />
+                                      </IconButton>
+                                    </div>
+                                  ) : (
+                                    value
+                                  )}
                                 </TableCell>
                               );
                             })}
-                            <div>
-                              {/* <p onClick={() => openEditBox(row)}>Edit</p> */}
-                              <IconButton
-                                onClick={() => openEditBox(row)}
-                                aria-label="edit"
-                              >
-                                <EditIcon />
-                              </IconButton>
-                              <IconButton
-                                onClick={() => styleDelete(row)}
-                                aria-label="delete"
-                              >
-                                <DeleteIcon />
-                              </IconButton>
-                              {/* <p onClick={() => console.log("delete", row)}>
-                                Delete
-                              </p> */}
-                            </div>
                           </TableRow>
                         );
                       })}

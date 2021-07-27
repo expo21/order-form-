@@ -84,7 +84,9 @@ export default function Step_4({ formData, setForm, navigation, progress }) {
       <div className="step_form-wrapper">
         <div className="form_footer">
           <Button onClick={() => navigation.previous()}>Back</Button>
-          <Button onClick={() => navigation.next()}>Review</Button>
+          <Button onClick={() => navigation.next()}>
+            {formData.step_1.order_number ? "Next" : "Review"}
+          </Button>
         </div>
       </div>
     </div>
