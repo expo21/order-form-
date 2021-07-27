@@ -1,13 +1,13 @@
 const StyleOption = require("../model/StyleOptions.model");
 const GarmentType = require("../model/garments.model");
 const Options = require("../model/Options.model");
+const { findOne } = require("../model/StyleOptions.model");
 
 exports.getAllStyleOptions = async () => {
   try {
     let list = await StyleOption.find({ deleted: false })
       .populate("options")
       .populate("garment_type");
-    console.log(list);
     if (list.length > 0) {
       return list;
     }
@@ -57,35 +57,74 @@ exports.getAllStyleOptions = async () => {
 //getStyleOptionByGarmentAndGender
 exports.getStyleOptionByGarmentAndGender = async (garment, gender) => {
   try {
-    let garment_id = await GarmentType.findOne(
-      {
-        $and: [{ title: garment }, { gender: gender }],
-        status: 1,
-      },
-      { _id: 1 }
-    );
-    let garmentId = garment_id._id;
+    // let garment_id = await GarmentType.findOne(
+    //   {
+    //     $and: [{ title: garment }, { gender: gender }],
+    //     status: 1,
+    //   },
+    //   { _id: 1 }
+    // );
+    // let garmentId = garment_id._id;
 
-    let styleOptions = await StyleOption.find(
-      {
-        garment_type: garmentId,
-        status: 1,
-      },
-      {
-        options: 1,
-        title: 1,
-        custom: 1,
-      }
-    ).populate("options");
+    // let styleOptions = await StyleOption.find(
+    //   {
+    //     garment_type: garment,
+    //     status: 1,
+    //   },
+    //   {
+    //     options: 1,
+    //     title: 1,
+    //     custom: 1,
+    //   }
+    // ).populate("options");
 
-    console.log(styleOptions);
-    return styleOptions;
+    let garmentId = await GarmentType.find({ title: garment }, { _id: 1 });
+    console.log(garmentId);
+
+    // let styleOptions = await StyleOption.aggregate([
+    //   { $match: { garment_type: { $all: [garmentId[0].id] } } },
+    // ]);
+    let styleOptions = await StyleOption.find({
+      garment_type: garmentId[0].id,
+    }).populate("options");
+
+    // let newas = styleOptions.map((x) => {
+    //   return x.options
+    //     .map((y) => {
+    //       if (y.garment_type.includes(garmentId[0].id) && y.deleted === false) {
+    //         return y;
+    //       }
+    //     })
+    //     .filter(function (el) {
+    //       return el != null;
+    //     });
+    // });
+
+    return styleOptions.map((item) => {
+      return {
+        _id: item._id,
+        title: item.title,
+        custom: item.custom,
+        options: item.options
+          ?.map((y) => {
+            if (
+              y.garment_type.includes(garmentId[0].id) &&
+              y.deleted === false
+            ) {
+              return y;
+            }
+          })
+          .filter(function (el) {
+            return el != null;
+          }),
+      };
+    });
   } catch (error) {
     console.log(error);
   }
 };
 
-///
+//
 
 exports.updateStyleOption = async (objId, dataObj) => {
   try {
@@ -101,7 +140,7 @@ exports.updateStyleOption = async (objId, dataObj) => {
   }
 };
 
-///
+//
 exports.disbaleStyleOption = async (objId, dataObj) => {
   try {
     dataObj.status = 0;
@@ -118,14 +157,12 @@ exports.disbaleStyleOption = async (objId, dataObj) => {
 
 //
 exports.addGramentToStyleOption = async (optionId, garment_type) => {
-  console.log(optionId, garment_type);
   try {
     let updatedOption = await StyleOption.updateOne(
       { _id: optionId },
       { $push: { garment_type: garment_type } },
       { new: true }
     );
-    console.log(updatedOption);
     return updatedOption;
   } catch (error) {
     console.log(error);
@@ -144,7 +181,6 @@ exports.updateStyleOption = async (id, obj) => {
     let updatedOption = await StyleOption.updateOne({ _id: id }, option, {
       new: true,
     });
-    console.log({ updatedOption });
     return updatedOption;
   } catch (error) {
     console.log(error);

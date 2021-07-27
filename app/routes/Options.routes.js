@@ -51,7 +51,6 @@ router.post("/options/addOptions", upload.single("image"), async (req, res) => {
       status: 1,
       image: req.file.filename,
     });
-    console.log(newOption);
     const savedOption = await newOption.save();
     if (savedOption) {
       let saveToStyle = await StyleOption.updateOne(
@@ -71,6 +70,7 @@ router.post("/options/addOptions", upload.single("image"), async (req, res) => {
 router.get("/options/optionsList", (req, res) => {
   getAllOptionList()
     .then((result) => {
+      console.log({ result });
       if (result) {
         return res.send({ status: true, msg: "Options list.", data: result });
       }

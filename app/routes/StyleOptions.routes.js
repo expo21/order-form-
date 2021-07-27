@@ -34,7 +34,7 @@ router.post("/styleOptions", async (req, res) => {
 //get style option by garmnet type
 
 router.get("/styleOptions/:garmentType/:gender", (req, res) => {
-  console.log(req.params);
+  console.log(req.params.garmentType, req.params.gender);
   getStyleOptionByGarmentAndGender(req.params.garmentType, req.params.gender)
     .then((result) => {
       if (result.length > 0) {
@@ -73,7 +73,6 @@ router.get("/styleOptions", (req, res) => {
 router.post("/updateStyleOption/:styleOption", (req, res) => {
   addGramentToStyleOption(req.params.styleOption, req.body.garment_type)
     .then((result) => {
-      console.log(result);
       if (result.ok === 1)
         return res.send({ status: true, msg: "Garment type added.", data: [] });
       return res.send({

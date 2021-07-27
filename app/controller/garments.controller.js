@@ -95,7 +95,6 @@ exports.removeGarment = async (objId) => {
         },
       }
     );
-    console.log({ updatedItem });
     return updatedItem;
   } catch (error) {}
 };

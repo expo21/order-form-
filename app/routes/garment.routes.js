@@ -87,7 +87,6 @@ router.get("/allGarments", (req, res) => {
 
 //delete garment
 router.get("/deleteGarment/:id", (req, res) => {
-  console.log("sdfchsshf", req.params.id);
   removeGarment(req.params.id)
     .then((result) => {
       if (result) {

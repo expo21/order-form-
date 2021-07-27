@@ -7,7 +7,6 @@ exports.getAllOptionList = async () => {
       .populate("style_option")
       .populate("garment_type");
     if (list.length > 0) {
-      console.log({ list });
       return list;
     }
     return false;
@@ -43,13 +42,12 @@ exports.removeGarmentFromOption = async (objId, dataObj) => {
 };
 // delete option
 exports.deleteOption = async (optionId) => {
-  console.log(optionId);
   try {
     let updatedOption = await Options.updateOne(
-      { _id: objId },
+      { _id: optionId },
       { $set: { deleted: true } }
     );
-    console.log(updatedOption);
+    return updatedOption;
   } catch (error) {
     console.log(error);
   }

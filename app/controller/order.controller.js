@@ -23,7 +23,6 @@ const getNextSequenceValue = async (queryString) => {
 exports.createOrder = async (obj) => {
   try {
     let order_id = await getNextSequenceValue("productid");
-    console.log(order_id);
     let newOrder = new Order({
       order_number: order_id,
       name: obj.step_1.name,
@@ -40,7 +39,6 @@ exports.createOrder = async (obj) => {
     });
 
     let savedOrder = await newOrder.save();
-    console.log(savedOrder);
 
     return savedOrder;
   } catch (error) {
@@ -52,7 +50,6 @@ exports.createOrder = async (obj) => {
 exports.getOrderByName = async (obj) => {
   try {
     let searchResult = await Order.find({ $text: { $search: obj } });
-    console.log(searchResult);
     if (searchResult) {
       return searchResult;
     }
@@ -98,7 +95,6 @@ exports.getOrderByOrderId = async (orderId) => {
 exports.getAllOrder = async () => {
   try {
     let orders = await Order.find({}, { updatedAt: 0, __v: 0 });
-    console.log(orders);
     let arr = orders.map((obj) => {
       return {
         // _id: obj._id,
@@ -117,9 +113,10 @@ exports.getAllOrder = async () => {
         status: obj.status,
       };
     });
-    console.log({ arr });
     return arr;
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 //update order
@@ -145,7 +142,6 @@ exports.updateOrder = async (id, obj) => {
       },
       { new: true }
     );
-    console.log(order);
     return order;
   } catch (error) {
     console.log(error);

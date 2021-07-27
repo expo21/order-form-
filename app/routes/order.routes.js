@@ -12,9 +12,7 @@ const {
 
 // get data
 router.get("/order", (req, res) => {
-  console.log("jhfgsjddfjsdf");
   getAllOrder().then((result) => {
-    console.log({ result });
     res.send({ status: true, data: result });
   });
 });
