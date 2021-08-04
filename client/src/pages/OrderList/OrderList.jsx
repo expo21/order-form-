@@ -10,66 +10,11 @@ import PageTitle from "../../components/PageTitle";
 // data
 import { getOrderList } from "../../helper/helperFunctions";
 
-const datatableData = [
-  ["Joe James", "Example Inc.", "Yonkers", "NY"],
-  ["John Walsh", "Example Inc.", "Hartford", "CT"],
-  ["Bob Herm", "Example Inc.", "Tampa", "FL"],
-  ["James Houston", "Example Inc.", "Dallas", "TX"],
-  ["Prabhakar Linwood", "Example Inc.", "Hartford", "CT"],
-  ["Kaui Ignace", "Example Inc.", "Yonkers", "NY"],
-  ["Esperanza Susanne", "Example Inc.", "Hartford", "CT"],
-  ["Christian Birgitte", "Example Inc.", "Tampa", "FL"],
-  ["Meral Elias", "Example Inc.", "Hartford", "CT"],
-  ["Deep Pau", "Example Inc.", "Yonkers", "NY"],
-  ["Sebastiana Hani", "Example Inc.", "Dallas", "TX"],
-  ["Marciano Oihana", "Example Inc.", "Yonkers", "NY"],
-  ["Brigid Ankur", "Example Inc.", "Dallas", "TX"],
-  ["Anna Siranush", "Example Inc.", "Yonkers", "NY"],
-  ["Avram Sylva", "Example Inc.", "Hartford", "CT"],
-  ["Serafima Babatunde", "Example Inc.", "Tampa", "FL"],
-  ["Gaston Festus", "Example Inc.", "Tampa", "FL"],
-];
-
 const useStyles = makeStyles((theme) => ({
   tableOverflow: {
     overflow: "auto",
   },
 }));
-
-const columnsz = [
-  {
-    name: "name",
-    label: "Name",
-    options: {
-      filter: true,
-      sort: true,
-    },
-  },
-  {
-    name: "company",
-    label: "Company",
-    options: {
-      filter: true,
-      sort: false,
-    },
-  },
-  {
-    name: "city",
-    label: "City",
-    options: {
-      filter: true,
-      sort: false,
-    },
-  },
-  {
-    name: "state",
-    label: "State",
-    options: {
-      filter: true,
-      sort: false,
-    },
-  },
-];
 
 const data = [
   { name: "Joe James", company: "Test Corp", city: "Yonkers", state: "NY" },
@@ -110,26 +55,6 @@ export default function OrderList() {
         // columns = Object.keys(data[0]).map((item) => item);
         console.log(response);
         let resp = { ...response, ...response.custom, ...response.ready_made };
-        console.log(resp);
-
-        console.log(
-          Object.keys(response[0])
-            .map((item) => item)
-            .map((obj) => {
-              console.log(typeof response[0][obj] === "string");
-
-              if (typeof response[0][obj] === "string") {
-                return {
-                  name: obj,
-                  label: obj.charAt(0).toUpperCase() + obj.slice(1),
-                  options: {
-                    filter: true,
-                    sort: true,
-                  },
-                };
-              }
-            })
-        );
 
         setColumns(
           Object.keys(response[0])

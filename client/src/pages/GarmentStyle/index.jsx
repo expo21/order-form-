@@ -379,7 +379,7 @@ export default function GarmentStyle() {
                                 <TableCell
                                   key={column.name}
                                   align={column.align}
-                                  onClick={() => console.log(row)}
+                                  onClick={() => console.log(row, "sdiyfg")}
                                 >
                                   {Array.isArray(value) ? (
                                     printArray(value)

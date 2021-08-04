@@ -62,6 +62,7 @@ router.get("/styleOptions/:garmentType/:gender", (req, res) => {
 router.get("/styleOptions", (req, res) => {
   getAllStyleOptions()
     .then((result) => {
+      console.log(result);
       res.send({ status: true, msg: "List Found", data: result });
     })
     .catch((error) => {

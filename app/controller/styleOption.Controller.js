@@ -1,7 +1,6 @@
 const StyleOption = require("../model/StyleOptions.model");
 const GarmentType = require("../model/garments.model");
 const Options = require("../model/Options.model");
-const { findOne } = require("../model/StyleOptions.model");
 
 exports.getAllStyleOptions = async () => {
   try {
@@ -9,7 +8,18 @@ exports.getAllStyleOptions = async () => {
       .populate("options")
       .populate("garment_type");
     if (list.length > 0) {
-      return list;
+      return list.map((item) => {
+        return {
+          _id: item._id,
+          options: item.options,
+          deleted: item.deleted,
+          title: item.title,
+          custom: item.custom,
+          garment_type: item.garment_type.filter(
+            (option) => option.deleted === false
+          ),
+        };
+      });
     }
   } catch (error) {
     console.log(error);
