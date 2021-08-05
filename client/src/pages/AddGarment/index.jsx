@@ -102,8 +102,12 @@ export default function AddGarment() {
 
   const [newOption, setNewOption] = useState(defaultObject);
   const [error, setError] = useState("");
+
+  //handle submit garment details
+
   const handleSubmit = (e) => {
     e.preventDefault();
+
     const formData = new FormData();
     formData.append("image", newOption.image);
     formData.append("gender", newOption.gender);
@@ -126,7 +130,6 @@ export default function AddGarment() {
           }
         })
         .catch((err) => {
-          console.log(err);
           handleClose();
           setNewOption(defaultObject);
         });
@@ -220,7 +223,6 @@ export default function AddGarment() {
   };
 
   const handleChange = (e) => {
-    console.log(e.target.value);
     setNewOption({ ...newOption, [e.target.name]: e.target.value });
   };
 
@@ -232,7 +234,7 @@ export default function AddGarment() {
   const fetchGarmentLIst = async () => {
     try {
       const resultedData = await getGarmentList();
-      if (resultedData.length > 0) {
+      if (resultedData !== undefined && resultedData.length > 0) {
         setTableData(resultedData);
       } else {
         setTableData([]);
@@ -266,15 +268,11 @@ export default function AddGarment() {
     }
   };
 
-  // const onCellClick = (row) => {
-  //   console.log(row);
-  // };
-
   //delete garment
   const deleteFunction = async (row) => {
     try {
       let response = await deleteGarment(row);
-      console.log(response);
+
       if (response.ok === 1) {
         setState(!state);
       }
@@ -349,7 +347,6 @@ export default function AddGarment() {
                           >
                             {columns.map((column) => {
                               const value = row[column.name];
-                              console.log(value);
                               return (
                                 <TableCell
                                   key={column.id}
@@ -365,12 +362,12 @@ export default function AddGarment() {
                                     />
                                   ) : column.name === "action" ? (
                                     <div>
-                                      <IconButton
+                                      {/* <IconButton
                                         onClick={() => openEditBox(row)}
                                         aria-label="edit"
                                       >
                                         <EditIcon />
-                                      </IconButton>
+                                      </IconButton> */}
                                       <IconButton
                                         onClick={() => garmentDelete(row)}
                                         aria-label="delete"
@@ -451,7 +448,6 @@ export default function AddGarment() {
               </TextField>
             </div>
 
-            {console.log({ editData })}
             {editData._id && (
               <div>
                 <div>

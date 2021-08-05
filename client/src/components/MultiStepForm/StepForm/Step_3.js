@@ -19,12 +19,10 @@ export default function Step_3({ formData, setForm, navigation, progress }) {
       formData.step_2.garment_type,
       formData.step_1.gender
     ).then((data) => {
-      console.log({ data });
       setApiData(data);
 
       if (data.length > 0) {
         let readyMade = data.filter((i) => i.custom === 0);
-        console.log({ readyMade });
 
         setReadyMade(readyMade);
         let custom = data.filter((i) => i.custom === 1);
@@ -32,9 +30,7 @@ export default function Step_3({ formData, setForm, navigation, progress }) {
           formData.custom = createObject(custom);
           formData.ready_made = createObject(readyMade);
         } else {
-          console.log(formData);
         }
-        console.log({ custom });
 
         setCustom(custom);
         setShowOptions(true);
@@ -51,29 +47,23 @@ export default function Step_3({ formData, setForm, navigation, progress }) {
 
   /////
   const onChecked = (e) => {
-    console.log(e.target.name, e.target.value);
     try {
       checkBoxData.set(e.target.name, e.target.checked);
 
       let obj = e.target.value;
-      console.log(obj);
-      console.log(checkedData);
+
       if (checkedData.includes(obj)) {
-        console.log("in");
         let checked = checkedData.filter((i) => {
           return i !== obj;
         });
         setCheckedData(checked);
-        console.log(checkedData);
       } else {
-        console.log("out");
         checkedData.push(obj);
         setCheckedData(checkedData);
       }
 
       // update the state by creating a new Map
       setCheckBoxData({ ...checkBoxData });
-      console.log(checkBoxData);
     } catch (error) {
       console.log(error);
     }
@@ -84,10 +74,7 @@ export default function Step_3({ formData, setForm, navigation, progress }) {
   const handleChnage = (e, obj) => {
     let targetName = e.target.name;
     let value = stringTo(e.target.value);
-    console.log(e.target.value);
-    console.log(typeof targetName);
     checkBoxData.set(value, e.target.checked);
-    console.log(checkBoxData);
     setForm(e);
   };
 

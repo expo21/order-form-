@@ -10,7 +10,6 @@ export default function Step_2({ formData, setForm, navigation, progress }) {
     progress(25);
 
     garmentListByGender(formData.step_1.gender).then((result) => {
-      console.log({ result });
       if (result.length > 0) {
         setAPIdata(result);
       } else {
@@ -30,7 +29,6 @@ export default function Step_2({ formData, setForm, navigation, progress }) {
 
   //choseCloth
   const chooseCloth = (e) => {
-    console.log(e.target.value);
     setForm(e);
   };
 

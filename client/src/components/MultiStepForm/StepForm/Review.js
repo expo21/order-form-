@@ -32,39 +32,6 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
   },
 }));
-const AntSwitch = withStyles((theme) => ({
-  root: {
-    width: 28,
-    height: 16,
-    padding: 0,
-    display: "flex",
-  },
-  switchBase: {
-    padding: 2,
-    color: theme.palette.grey[500],
-    "&$checked": {
-      transform: "translateX(12px)",
-      color: theme.palette.common.white,
-      "& + $track": {
-        opacity: 1,
-        backgroundColor: "#536DFE",
-        borderColor: "#536DFE",
-      },
-    },
-  },
-  thumb: {
-    width: 12,
-    height: 12,
-    boxShadow: "none",
-  },
-  track: {
-    border: `1px solid ${theme.palette.grey[500]}`,
-    borderRadius: 16 / 2,
-    opacity: 1,
-    backgroundColor: theme.palette.common.white,
-  },
-  checked: {},
-}))(Switch);
 
 export default function Review({ formData, setForm, navigation, progress }) {
   const classes = useStyles();
@@ -73,20 +40,7 @@ export default function Review({ formData, setForm, navigation, progress }) {
   });
 
   const handleChangeSelect = (event) => {
-    console.log(event.target);
     setForm(event);
-  };
-
-  const handleChangeSwitch = (event) => {
-    console.log(event.target.name, event.target.value);
-    if (event.target.value == 1) {
-      console.log("sjgjsf");
-      formData.status = 0;
-      console.log(formData);
-    }
-    if (event.target.value == 0) {
-      formData.status = 1;
-    }
   };
 
   let history = useHistory();
@@ -94,10 +48,6 @@ export default function Review({ formData, setForm, navigation, progress }) {
   useEffect(() => {
     progress(100);
   }, []);
-
-  // const editHandle = () => {
-  //   history.push(`/app/order/${formData.step_1.order_number}`);
-  // };
 
   let step_3_details = [];
   var custom_options;
@@ -142,7 +92,6 @@ export default function Review({ formData, setForm, navigation, progress }) {
         });
     } else {
       axios.post(`${window.APIPATH}/api/createOrder`, formData).then((res) => {
-        console.log(res);
         if (res.data.status) {
           history.push("/app/orders/orderList");
         }
@@ -167,7 +116,6 @@ export default function Review({ formData, setForm, navigation, progress }) {
     };
   }
 
-  console.log({ stepDetails });
   return (
     <div className="review_wrapper">
       <h4 className="step_heading">Review your details</h4>

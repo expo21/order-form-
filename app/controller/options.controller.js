@@ -7,7 +7,21 @@ exports.getAllOptionList = async () => {
       .populate("style_option")
       .populate("garment_type");
     if (list.length > 0) {
-      return list;
+      return list.map((item) => {
+        return {
+          _id: item._id,
+          image: item.image,
+          input_type: item.input_type,
+          status: item.status,
+          title: item.title,
+          deleted: item.deleted,
+          garment_type: item.garment_type.filter(
+            (option) => option.deleted === false
+          ),
+          style_option:
+            item.style_option.deleted === false ? item.style_option : "",
+        };
+      });
     }
     return false;
   } catch (error) {
@@ -17,10 +31,9 @@ exports.getAllOptionList = async () => {
 
 exports.addGarmentToOptions = async (objId, dataObj) => {
   try {
-    let updatedObj = await Options.updateOne(
-      { _id: objId },
-      { $push: { garment_type: dataObj } }
-    );
+    let updatedObj = await Options.findByIdAndUpdate(objId, dataObj, {
+      new: true,
+    });
     if (updatedObj) return updatedObj;
     else return false;
   } catch (error) {

@@ -86,8 +86,9 @@ router.get("/options/optionsList", (req, res) => {
 });
 
 //add garment type to the options of style
-router.post("/options/addGarmentToOptions", (req, res) => {
-  addGarmentToOptions()
+router.post("/options/addGarmentToOptions/:id", (req, res) => {
+  console.log(req.params.id, req.body);
+  addGarmentToOptions(req.params.id, req.body)
     .then((result) => {
       if (result) {
         res.send({ status: true, msg: "update done.", data: [] });

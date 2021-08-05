@@ -44,9 +44,9 @@ export default function Step_1({ formData, setForm, navigation, progress }) {
   };
 
   // download pdf
-  const downloadPDF = () => {
-    console.log("pdf download krenge ham ");
-  };
+  // const downloadPDF = () => {
+  //   console.log("pdf download krenge ham ");
+  // };
 
   const func = () => {
     if (errors.name !== "") {
@@ -155,11 +155,11 @@ export default function Step_1({ formData, setForm, navigation, progress }) {
         </div>
 
         <div className="form_footer">
-          {formData.step_1.order_number && (
+          {/* {formData.step_1.order_number && (
             <Button onClick={downloadPDF} className="next_btn">
               Download
             </Button>
-          )}
+          )} */}
           <Button onClick={handleNext} className="next_btn">
             Next
           </Button>

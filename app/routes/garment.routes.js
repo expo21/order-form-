@@ -77,7 +77,7 @@ router.get("/allGarments", (req, res) => {
       if (result.length > 0) {
         res.send({ status: true, msg: "List found", data: result });
       } else {
-        res.send({ status: false, msg: "something went wrong.", data: [] });
+        res.send({ status: false, msg: "No Garments Found.", data: [] });
       }
     })
     .catch((error) => {

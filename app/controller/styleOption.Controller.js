@@ -11,7 +11,7 @@ exports.getAllStyleOptions = async () => {
       return list.map((item) => {
         return {
           _id: item._id,
-          options: item.options,
+          options: item.options.filter((option) => option.deleted === false),
           deleted: item.deleted,
           title: item.title,
           custom: item.custom,
@@ -88,8 +88,10 @@ exports.getStyleOptionByGarmentAndGender = async (garment, gender) => {
     //   }
     // ).populate("options");
 
-    let garmentId = await GarmentType.find({ title: garment }, { _id: 1 });
-    console.log(garmentId);
+    let garmentId = await GarmentType.find(
+      { title: garment, deleted: false },
+      { _id: 1 }
+    );
 
     // let styleOptions = await StyleOption.aggregate([
     //   { $match: { garment_type: { $all: [garmentId[0].id] } } },

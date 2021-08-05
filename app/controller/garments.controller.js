@@ -19,7 +19,7 @@ exports.createGarmentOption = async (dataObj) => {
 
 exports.garmetsByGender = async (gender) => {
   try {
-    let garmentList = await Garment.find({ gender, status: 1 });
+    let garmentList = await Garment.find({ gender, status: 1, deleted: false });
     if (garmentList.length > 0) {
       return garmentList;
     } else {

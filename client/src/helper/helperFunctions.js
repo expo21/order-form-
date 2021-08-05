@@ -117,7 +117,6 @@ export const garmentListByGender = async (gender) => {
     let response = await axios.get(
       `${window.APIPATH}/api/garmentsByGender/${gender}`
     );
-    console.log(response);
     if (response.data.status) {
       return response.data.data;
     } else {
@@ -163,18 +162,17 @@ export const updateStyleOption = async (obj) => {
       `${window.APIPATH}/api/updateStyles/${obj._id}`,
       obj
     );
-    console.log(response);
     return response;
   } catch (error) {}
 };
 
+//order update
 export const updateOrder = async (obj) => {
   try {
     let response = await axios.post(
       `${window.APIPATH}/api/updateOrder/${obj.step_1.order_number}`,
       obj
     );
-    console.log(response);
     return response.data.status;
   } catch (error) {
     return false;
@@ -191,6 +189,21 @@ export const deleteStyleOption = async (obj) => {
     if (response.data.status) {
       return response.data;
     } else {
+      return response.data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// update option
+export const updateOption = async (obj) => {
+  try {
+    let response = await axios.post(
+      `${window.APIPATH}/api/options/addGarmentToOptions/${obj._id}`,
+      obj
+    );
+    if (response.data.status) {
       return response.data;
     }
   } catch (error) {

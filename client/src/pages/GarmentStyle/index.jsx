@@ -108,14 +108,6 @@ const MenuProps = {
 };
 
 const columns = [
-  // {
-  //   name: "_id",
-  //   label: "ID",
-  //   options: {
-  //     filter: false,
-  //     sort: false,
-  //   },
-  // },
   {
     name: "title",
     label: "Title",
@@ -174,7 +166,7 @@ export default function GarmentStyle() {
   const [selectedGarments, setSelectedGarments] = useState([]);
   const [styleType, setStyleType] = useState(0);
   const [styleList, setStyleList] = useState([]);
-  const [state, setState] = useState("");
+  const [state, setState] = useState(false);
 
   const [editData, setEditData] = useState({});
 
@@ -244,14 +236,17 @@ export default function GarmentStyle() {
         editData.garment_types = selectedGarments;
 
         updateStyleOption(editData).then((response) => {
-          console.log(response);
+          if (response.data.status) {
+            handleClose();
+            setState(!state);
+          }
         });
       } else {
         addStyleOption(formData)
           .then((response) => {
             if (response) {
               handleClose();
-              setState(true);
+              setState(!state);
               setSelectedGarments([]);
             }
           })
@@ -264,7 +259,6 @@ export default function GarmentStyle() {
       let resultedData = await getGarmentStyleList();
 
       if (resultedData !== undefined) {
-        console.log({ resultedData });
         setStyleList(resultedData);
       } else {
         setStyleList([]);

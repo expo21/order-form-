@@ -15,13 +15,9 @@ const data = [
 ];
 
 export default function Step_4({ formData, setForm, navigation, progress }) {
-  console.log({ formData });
   useEffect(() => {
     progress(75);
   }, []);
-  const onchange = (e) => {
-    console.log(e);
-  };
   return (
     <div className="step_form-wrapper">
       <h3 className="step_heading">Measurements</h3>

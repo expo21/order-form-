@@ -34,6 +34,7 @@ import {
   getGarmentStyleList,
   getStyleOptionsList,
   deleteStyleOption,
+  updateOption,
 } from "../../helper/helperFunctions";
 
 const useStyles = makeStyles((theme) => ({
@@ -182,6 +183,7 @@ export default function StyleOptions() {
     setTitle("");
     setGarment_type([]);
     setInput_type("");
+    setStyle_option("");
   };
   const [image, setImage] = useState(null);
   const [title, setTitle] = useState("");
@@ -192,6 +194,7 @@ export default function StyleOptions() {
   const [allStyleOptions, setAllStyleOptions] = useState([]);
   const [state, setState] = useState("");
   const [error, setError] = useState("");
+  const [editData, setEditData] = useState({});
 
   //Model end
 
@@ -236,19 +239,32 @@ export default function StyleOptions() {
       setError("Please provide all details.");
     } else {
       setError("");
-      addOption(formData)
-        .then((response) => {
-          handleClose();
-          setState(true);
-        })
-        .catch((error) => console.log(error));
+      if (editData._id) {
+        editData.garment_type = newOption.garment_type;
+        updateOption(editData)
+          .then((res) => {
+            handleClose();
+            setState(!state);
+          })
+          .catch((error) => console.log(error));
+      } else {
+        addOption(formData)
+          .then((response) => {
+            handleClose();
+            setState(true);
+          })
+          .catch((error) => console.log(error));
+      }
     }
   };
 
   //open edit box
   const openEditBox = async (row) => {
+    setEditData(row);
     setOpen(true);
     setTitle(row.title);
+    setGarment_type(row.garment_type);
+    setStyle_option(row.style_option._id);
     setInput_type(row.input_type);
   };
 
@@ -256,7 +272,6 @@ export default function StyleOptions() {
   const fetchAllOptions = () => {
     getStyleOptionsList()
       .then((response) => {
-        console.log({ response });
         if (response.length > 0) {
           setOptionList(response);
         } else setOptionList([]);
@@ -517,6 +532,13 @@ export default function StyleOptions() {
                   ))}
                 </TextField>
               </div>
+              {editData._id
+                ? editData.garment_type.map((x) => (
+                    <p key={x.title}>
+                      {x.title} | {x.gender}
+                    </p>
+                  ))
+                : null}
               <div className={classes.titleSelect}>
                 <InputLabel id="demo-mutiple-name-label">Garments</InputLabel>
                 <Select
@@ -535,26 +557,28 @@ export default function StyleOptions() {
                   ))}
                 </Select>
               </div>
-              <div className={classes.titleFile}>
-                <input
-                  accept="image/*"
-                  className={classes.input}
-                  style={{ display: "none" }}
-                  id="raised-button-file"
-                  type="file"
-                  name="image"
-                  onChange={(e) => setImage(e.target.files[0])}
-                />
-                <label htmlFor="raised-button-file">
-                  <Button
-                    variant="raised"
-                    component="span"
-                    className={classes.button}
-                  >
-                    <p>Upload</p>
-                  </Button>
-                </label>
-              </div>
+              {editData._id ? null : (
+                <div className={classes.titleFile}>
+                  <input
+                    accept="image/*"
+                    className={classes.input}
+                    style={{ display: "none" }}
+                    id="raised-button-file"
+                    type="file"
+                    name="image"
+                    onChange={(e) => setImage(e.target.files[0])}
+                  />
+                  <label htmlFor="raised-button-file">
+                    <Button
+                      variant="raised"
+                      component="span"
+                      className={classes.button}
+                    >
+                      <p>Upload</p>
+                    </Button>
+                  </label>
+                </div>
+              )}
               <div>{error && <p>{error}</p>}</div>
 
               <div className={classes.titleButton}>
@@ -566,7 +590,7 @@ export default function StyleOptions() {
                   color="primary"
                   onClick={handleSubmit}
                 >
-                  Submit
+                  {editData._id ? "Update" : "Submit"}
                 </Button>
               </div>
             </div>
