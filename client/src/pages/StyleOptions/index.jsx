@@ -28,6 +28,8 @@ import TableRow from "@material-ui/core/TableRow";
 import IconButton from "@material-ui/core/IconButton";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
+import ConfirmationBox from "../../components/ConfirmationBox/confirmationBox";
+
 import {
   addOption,
   getGarmentList,
@@ -184,6 +186,8 @@ export default function StyleOptions() {
     setGarment_type([]);
     setInput_type("");
     setStyle_option("");
+    setDeleteModal(false);
+    setSelectedItem({});
   };
   const [image, setImage] = useState(null);
   const [title, setTitle] = useState("");
@@ -195,6 +199,8 @@ export default function StyleOptions() {
   const [state, setState] = useState("");
   const [error, setError] = useState("");
   const [editData, setEditData] = useState({});
+  const [selectedItem, setSelectedItem] = useState({});
+  const [openDeleteModal, setDeleteModal] = useState(false);
 
   //Model end
 
@@ -326,25 +332,14 @@ export default function StyleOptions() {
 
   //delete garment
   const optionDelete = (row) => {
-    confirmAlert({
-      title: "Confirm to delete. ",
-      message: "Are you sure to do this.",
-      buttons: [
-        {
-          label: "Yes",
-          onClick: () => deleteOption(row),
-        },
-        {
-          label: "No",
-          onClick: onclose,
-        },
-      ],
-    });
+    setDeleteModal(true);
+    setSelectedItem(row);
   };
 
   const deleteOption = async (row) => {
     let response = await deleteStyleOption(row);
     if (response.status) {
+      setDeleteModal(false);
       setState(!state);
     }
   };
@@ -464,6 +459,12 @@ export default function StyleOptions() {
         ) : (
           <div>There is no data please add some ...</div>
         )}
+
+        <ConfirmationBox
+          deleteFunction={() => deleteOption(selectedItem)}
+          openDeleteModal={openDeleteModal}
+          handleClose={handleClose}
+        />
 
         <Modal
           aria-labelledby="transition-modal-title"

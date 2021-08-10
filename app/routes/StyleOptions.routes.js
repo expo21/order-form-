@@ -100,7 +100,17 @@ router.post("/updateStyles/:styleOption", (req, res) => {
 
 //delete styleOption
 router.get("/deleteStyle/:styleId", (req, res) => {
-  deleteStyle().then().catch();
+  deleteStyle(req.params.styleId)
+    .then((result) => {
+      if (result) {
+        res.send({ status: true, message: "Option deleted." });
+      } else {
+        res.send({ status: false, message: "Something went wrong." });
+      }
+    })
+    .catch((error) => {
+      res.send({ status: false, message: "Something went wrong." });
+    });
 });
 
 module.exports = router;

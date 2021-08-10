@@ -196,6 +196,20 @@ export const deleteStyleOption = async (obj) => {
   }
 };
 
+//delete style
+export const deleteStyle = async (obj) => {
+  try {
+    let response = await axios.get(
+      `${window.APIPATH}/api/deleteStyle/${obj._id}`
+    );
+    if (response.data.status) {
+      return response.data;
+    } else {
+      return response.data;
+    }
+  } catch (error) {}
+};
+
 // update option
 export const updateOption = async (obj) => {
   try {

@@ -25,6 +25,7 @@ import {
   getGarmentList,
   addStyleOption,
   updateStyleOption,
+  deleteStyle,
 } from "../../helper/helperFunctions";
 
 import {
@@ -35,6 +36,7 @@ import {
   MenuItem,
   Select,
 } from "@material-ui/core";
+import ConfirmationBox from "../../components/ConfirmationBox/confirmationBox";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -170,6 +172,9 @@ export default function GarmentStyle() {
 
   const [editData, setEditData] = useState({});
 
+  const [selectedItem, setSelectedItem] = useState({});
+  const [openDeleteModal, setDeleteModal] = useState(false);
+
   const handleOpen = () => {
     setOpen(true);
   };
@@ -181,24 +186,14 @@ export default function GarmentStyle() {
     setTitle("");
     setSelectedGarments([]);
     setStyleType(0);
+    setDeleteModal(false);
+    setSelectedItem({});
   };
 
   //delete garment
   const styleDelete = (row) => {
-    confirmAlert({
-      title: "Confirm to delete. ",
-      message: "Are you sure to do this.",
-      buttons: [
-        {
-          label: "Yes",
-          onClick: onclose,
-        },
-        {
-          label: "No",
-          onClick: onclose,
-        },
-      ],
-    });
+    setDeleteModal(true);
+    setSelectedItem(row);
   };
 
   const [error, setError] = useState("");
@@ -281,6 +276,14 @@ export default function GarmentStyle() {
     fetchStyleLIst();
     fetchGarmentLIst();
   }, [state]);
+
+  const deleteFunction = async (row) => {
+    let response = await deleteStyle(row);
+    if (response.status) {
+      setDeleteModal(false);
+      setState(!state);
+    }
+  };
 
   const printArray = (arr) => {
     return arr.map((x) => {
@@ -422,6 +425,12 @@ export default function GarmentStyle() {
         ) : (
           <div>There is no data please add some ...</div>
         )}
+
+        <ConfirmationBox
+          deleteFunction={() => deleteFunction(selectedItem)}
+          openDeleteModal={openDeleteModal}
+          handleClose={handleClose}
+        />
         <Modal
           aria-labelledby="transition-modal-title"
           aria-describedby="transition-modal-description"

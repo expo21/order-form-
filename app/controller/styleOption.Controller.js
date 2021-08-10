@@ -198,3 +198,15 @@ exports.updateStyleOption = async (id, obj) => {
     console.log(error);
   }
 };
+
+exports.deleteStyle = async (optionId) => {
+  try {
+    let updatedOption = await StyleOption.updateOne(
+      { _id: optionId },
+      { $set: { deleted: true } }
+    );
+    return updatedOption;
+  } catch (error) {
+    console.log(error);
+  }
+};

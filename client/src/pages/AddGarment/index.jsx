@@ -29,6 +29,7 @@ import TableRow from "@material-ui/core/TableRow";
 import Avatar from "@material-ui/core/Avatar";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
+import ConfirmationBox from "../../components/ConfirmationBox/confirmationBox";
 import {
   getGarmentList,
   addGarment,
@@ -99,6 +100,7 @@ export default function AddGarment() {
   const classes = useStyles();
   const [tableData, setTableData] = useState([]);
   const [state, setState] = useState(false);
+  const [selectedItem, setSelectedItem] = useState({});
 
   const [newOption, setNewOption] = useState(defaultObject);
   const [error, setError] = useState("");
@@ -113,11 +115,13 @@ export default function AddGarment() {
     formData.append("gender", newOption.gender);
     formData.append("title", newOption.title);
 
-    if (
-      newOption.title === "" &&
-      newOption.gender === "" &&
-      newOption.image === ""
-    ) {
+    console.log(newOption.image.length);
+
+    if (newOption.image.length === 0) {
+      setError("Please Provide all Details.");
+    } else if (newOption.gender.length === 0) {
+      setError("Please Provide all Details.");
+    } else if (newOption.title.length === 0) {
       setError("Please Provide all Details.");
     } else {
       setError("");
@@ -213,13 +217,18 @@ export default function AddGarment() {
   };
 
   const [open, setOpen] = React.useState(false);
+  const [openDeleteModal, setDeleteModal] = React.useState(false);
 
   const handleOpen = () => {
     setOpen(true);
   };
 
   const handleClose = () => {
+    setNewOption(defaultObject);
+    setDeleteModal(false);
+    setError("");
     setOpen(false);
+    setSelectedItem({});
   };
 
   const handleChange = (e) => {
@@ -274,6 +283,8 @@ export default function AddGarment() {
       let response = await deleteGarment(row);
 
       if (response.ok === 1) {
+        setDeleteModal(false);
+        setSelectedItem({});
         setState(!state);
       }
     } catch (error) {}
@@ -281,20 +292,8 @@ export default function AddGarment() {
 
   //delete garment
   const garmentDelete = (row) => {
-    confirmAlert({
-      title: "Confirm to delete. ",
-      message: "Are you sure to do this.",
-      buttons: [
-        {
-          label: "Yes",
-          onClick: () => deleteFunction(row),
-        },
-        {
-          label: "No",
-          onClick: onclose,
-        },
-      ],
-    });
+    setDeleteModal(true);
+    setSelectedItem(row);
   };
 
   return (
@@ -402,6 +401,13 @@ export default function AddGarment() {
       ) : (
         <div>There is no data please add some ...</div>
       )}
+
+      <ConfirmationBox
+        deleteFunction={() => deleteFunction(selectedItem)}
+        openDeleteModal={openDeleteModal}
+        handleClose={handleClose}
+      />
+
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
