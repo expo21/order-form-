@@ -42,19 +42,17 @@ let upload = multer({ storage, fileFilter });
 
 //create
 router.post("/garmentType", upload.single("image"), (req, res) => {
-  console.log("pathhhh", req.file.path);
   let ImageFileName = req.file.filename;
   if (req.file.mimetype === "image/webp") {
     ImageFileName = uuidv4() + "-" + Date.now() + ".png";
     const result = webp.dwebp(
       req.file.path,
-      `app/routes/uploads/${ImageFileName}`,
+      `./app/routes/uploads/${ImageFileName}`,
       "-o"
     );
     // ImageFileName = convertedFilename
   }
 
-  console.log(req.file);
   let dataObj = {
     title: req.body.title,
     gender: req.body.gender,
