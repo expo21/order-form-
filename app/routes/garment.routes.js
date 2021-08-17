@@ -8,6 +8,7 @@ const {
 const multer = require("multer");
 
 const webp = require("webp-converter");
+webp.grant_permission();
 const router = express.Router();
 const { v4: uuidv4 } = require("uuid");
 let path = require("path");
