@@ -41,11 +41,11 @@ const fileFilter = (req, file, cb) => {
 let upload = multer({ storage, fileFilter });
 
 //create
-router.post("/garmentType", upload.single("image"), (req, res) => {
+router.post("/garmentType", upload.single("image"), async (req, res) => {
   let ImageFileName = req.file.filename;
   if (req.file.mimetype === "image/webp") {
     ImageFileName = uuidv4() + "-" + Date.now() + ".png";
-    const result = webp.dwebp(
+    await webp.dwebp(
       req.file.path,
       `./app/routes/uploads/${ImageFileName}`,
       "-o"
@@ -66,7 +66,9 @@ router.post("/garmentType", upload.single("image"), (req, res) => {
         res.send({ status: false, msg: "Something went wrong.", data: [] });
       res.send({ status: true, msg: "New garment type is added. ", data: [] });
     })
-    .catch();
+    .catch((error) => {
+      res.send({ status: false, msg: error.message });
+    });
 });
 
 //get garments type by gender
