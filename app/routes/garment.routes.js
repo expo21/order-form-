@@ -7,6 +7,7 @@ const {
 } = require("../controller/garments.controller");
 const multer = require("multer");
 
+const webp = require("webp-converter");
 const router = express.Router();
 const { v4: uuidv4 } = require("uuid");
 let path = require("path");
@@ -16,7 +17,10 @@ const storage = multer.diskStorage({
     cb(null, "app/routes/uploads");
   },
   filename: function (req, file, cb) {
-    cb(null, uuidv4() + "-" + Date.now() + path.extname(file.originalname));
+    let filename =
+      uuidv4() + "-" + Date.now() + path.extname(file.originalname);
+
+    cb(null, filename);
   },
 });
 
@@ -38,12 +42,26 @@ let upload = multer({ storage, fileFilter });
 
 //create
 router.post("/garmentType", upload.single("image"), (req, res) => {
+  console.log("pathhhh", req.file.path);
+  let ImageFileName = req.file.filename;
+  if (req.file.mimetype === "image/webp") {
+    ImageFileName = uuidv4() + "-" + Date.now() + ".png";
+    const result = webp.dwebp(
+      req.file.path,
+      `app/routes/uploads/${ImageFileName}`,
+      "-o"
+    );
+    // ImageFileName = convertedFilename
+  }
+
+  console.log(req.file);
   let dataObj = {
     title: req.body.title,
     gender: req.body.gender,
-    image: req.file.filename,
+    image: ImageFileName,
     deleted: false,
   };
+
   createGarmentOption(dataObj)
     .then((result) => {
       if (!result)

@@ -37,6 +37,7 @@ import {
   Select,
 } from "@material-ui/core";
 import ConfirmationBox from "../../components/ConfirmationBox/confirmationBox";
+import Spinner from "../../components/Loader/index";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -197,6 +198,7 @@ export default function GarmentStyle() {
   };
 
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -225,6 +227,7 @@ export default function GarmentStyle() {
       setError("Please provide all details.");
     } else {
       setError("");
+      setLoading(true);
       if (editData._id) {
         editData.title = title;
         editData.custom = styleType;
@@ -234,6 +237,7 @@ export default function GarmentStyle() {
           if (response.data.status) {
             handleClose();
             setState(!state);
+            setLoading(false);
           }
         });
       } else {
@@ -243,9 +247,13 @@ export default function GarmentStyle() {
               handleClose();
               setState(!state);
               setSelectedGarments([]);
+              setLoading(false);
             }
           })
-          .catch((error) => console.log(error));
+          .catch((error) => {
+            console.log(error);
+            setLoading(false);
+          });
       }
     }
   };
@@ -255,6 +263,7 @@ export default function GarmentStyle() {
 
       if (resultedData !== undefined) {
         setStyleList(resultedData);
+        setLoading(false);
       } else {
         setStyleList([]);
       }
@@ -273,15 +282,18 @@ export default function GarmentStyle() {
   };
 
   useEffect(() => {
+    setLoading(true);
     fetchStyleLIst();
     fetchGarmentLIst();
   }, [state]);
 
   const deleteFunction = async (row) => {
+    setLoading(true);
     let response = await deleteStyle(row);
     if (response.status) {
       setDeleteModal(false);
       setState(!state);
+      setLoading(false);
     }
   };
 
@@ -336,7 +348,7 @@ export default function GarmentStyle() {
           </Button>
         }
       />
-
+      {loading && <Spinner />}
       <Grid>
         {styleList.length > 0 ? (
           <Grid item xs={12}>

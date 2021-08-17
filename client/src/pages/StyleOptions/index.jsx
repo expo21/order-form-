@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import PageTitle from "../../components/PageTitle/PageTitle";
-import { confirmAlert } from "react-confirm-alert"; // Import
-import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
+
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import {
@@ -38,6 +37,7 @@ import {
   deleteStyleOption,
   updateOption,
 } from "../../helper/helperFunctions";
+import Spinner from "../../components/Loader/index";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -201,7 +201,7 @@ export default function StyleOptions() {
   const [editData, setEditData] = useState({});
   const [selectedItem, setSelectedItem] = useState({});
   const [openDeleteModal, setDeleteModal] = useState(false);
-
+  const [loading, setLoading] = useState(false);
   //Model end
 
   //table
@@ -245,12 +245,14 @@ export default function StyleOptions() {
       setError("Please provide all details.");
     } else {
       setError("");
+      setLoading(true);
       if (editData._id) {
         editData.garment_type = newOption.garment_type;
         updateOption(editData)
           .then((res) => {
             handleClose();
             setState(!state);
+            setLoading(false);
           })
           .catch((error) => console.log(error));
       } else {
@@ -258,6 +260,7 @@ export default function StyleOptions() {
           .then((response) => {
             handleClose();
             setState(true);
+            setLoading(false);
           })
           .catch((error) => console.log(error));
       }
@@ -280,7 +283,11 @@ export default function StyleOptions() {
       .then((response) => {
         if (response.length > 0) {
           setOptionList(response);
-        } else setOptionList([]);
+          setLoading(false);
+        } else {
+          setOptionList([]);
+          setLoading(false);
+        }
       })
       .catch((error) => console.log(error));
   };
@@ -324,6 +331,7 @@ export default function StyleOptions() {
   };
 
   useEffect(() => {
+    setLoading(true);
     fetchAllOptions();
     fetchAllStyleOptions();
     fetchAllGarment();
@@ -337,10 +345,12 @@ export default function StyleOptions() {
   };
 
   const deleteOption = async (row) => {
+    setLoading(true);
     let response = await deleteStyleOption(row);
     if (response.status) {
       setDeleteModal(false);
       setState(!state);
+      setLoading(false);
     }
   };
 
@@ -359,6 +369,7 @@ export default function StyleOptions() {
           </Button>
         }
       />
+      {loading && <Spinner />}
       <Grid>
         {optionList.length > 0 ? (
           <Grid item xs={12}>

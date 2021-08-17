@@ -1,24 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Button, Grid } from "@material-ui/core";
-import { confirmAlert } from "react-confirm-alert"; // Import
-import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
-import MUIDataTable from "mui-datatables";
+
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
 import PageTitle from "../../components/PageTitle/PageTitle";
 import IconButton from "@material-ui/core/IconButton";
-import PhotoCamera from "@material-ui/icons/PhotoCamera";
-import axios from "axios";
-import { mdiCookieSettingsOutline } from "@mdi/js";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
-import zIndex from "@material-ui/core/styles/zIndex";
-import Paper from "@material-ui/core/Paper";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -27,14 +16,16 @@ import TableHead from "@material-ui/core/TableHead";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import Avatar from "@material-ui/core/Avatar";
-import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
+import { Paper, MenuItem } from "@material-ui/core";
 import ConfirmationBox from "../../components/ConfirmationBox/confirmationBox";
+
 import {
   getGarmentList,
   addGarment,
   deleteGarment,
 } from "../../helper/helperFunctions";
+import Spinner from "../../components/Loader/index";
 
 const useStyles = makeStyles((theme) => ({
   form1: {
@@ -97,6 +88,7 @@ const useStyles = makeStyles((theme) => ({
 const defaultObject = { title: "", gender: "", image: "" };
 
 export default function AddGarment() {
+  const [loading, setLoading] = useState(false);
   const classes = useStyles();
   const [tableData, setTableData] = useState([]);
   const [state, setState] = useState(false);
@@ -125,17 +117,20 @@ export default function AddGarment() {
       setError("Please Provide all Details.");
     } else {
       setError("");
+      setLoading(true);
       addGarment(formData)
         .then((res) => {
           if (res) {
             handleClose();
             setState(!state);
             setNewOption(defaultObject);
+            setLoading(false);
           }
         })
         .catch((err) => {
           handleClose();
           setNewOption(defaultObject);
+          setLoading(false);
         });
     }
   };
@@ -156,14 +151,6 @@ export default function AddGarment() {
         sort: false,
       },
     },
-    // {
-    //   name: "_id",
-    //   label: "ID",
-    //   options: {
-    //     filter: false,
-    //     sort: false,
-    //   },
-    // },
     {
       name: "title",
       label: "Title",
@@ -245,8 +232,10 @@ export default function AddGarment() {
       const resultedData = await getGarmentList();
       if (resultedData !== undefined && resultedData.length > 0) {
         setTableData(resultedData);
+        setLoading(false);
       } else {
         setTableData([]);
+        setLoading(false);
       }
     } catch (error) {
       console.log({ error });
@@ -254,6 +243,7 @@ export default function AddGarment() {
   };
   //Effects hooks
   useEffect(() => {
+    setLoading(true);
     fetchGarmentLIst();
   }, [state]);
 
@@ -280,12 +270,15 @@ export default function AddGarment() {
   //delete garment
   const deleteFunction = async (row) => {
     try {
+      setLoading(true);
       let response = await deleteGarment(row);
 
       if (response.ok === 1) {
         setDeleteModal(false);
+
         setSelectedItem({});
         setState(!state);
+        setLoading(false);
       }
     } catch (error) {}
   };
@@ -311,6 +304,7 @@ export default function AddGarment() {
           </Button>
         }
       />
+      {loading && <Spinner />}
       {tableData.length > 0 ? (
         <Grid container spacing={4}>
           <Grid item xs={12}>

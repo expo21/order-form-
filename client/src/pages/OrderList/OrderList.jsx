@@ -107,6 +107,9 @@ export default function OrderList() {
               onRowClick: (rowData, rowMeta) => {
                 history.push(`/app/order/${rowData[0]}`);
               },
+              onRowsDelete: () => {
+                console.log("hvjh");
+              },
             }}
           />
         </Grid>
