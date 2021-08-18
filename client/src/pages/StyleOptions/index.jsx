@@ -510,7 +510,6 @@ export default function StyleOptions() {
                   label="Input Type"
                   name="input_type"
                   value={input_type}
-                  helperText="Option Type"
                   variant="outlined"
                   // value={styleOption}
                   onChange={(e) => setInput_type(e.target.value)}
@@ -532,7 +531,6 @@ export default function StyleOptions() {
                   label="Style Type"
                   name="style_option"
                   value={style_option}
-                  helperText="Option Type"
                   variant="outlined"
                   // value={styleOption}
                   onChange={(e) => setStyle_option(e.target.value)}

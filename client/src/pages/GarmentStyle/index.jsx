@@ -262,9 +262,11 @@ export default function GarmentStyle() {
       let resultedData = await getGarmentStyleList();
 
       if (resultedData !== undefined) {
+        console.log({ resultedData });
         setStyleList(resultedData);
         setLoading(false);
       } else {
+        setLoading(false);
         setStyleList([]);
       }
     } catch (error) {}
@@ -320,7 +322,8 @@ export default function GarmentStyle() {
   };
 
   const printStatus = (value) => {
-    if (value === 1) {
+    console.log({ value });
+    if (value == 1) {
       return "Enable";
     } else {
       return "Disbale";
@@ -375,6 +378,7 @@ export default function GarmentStyle() {
                         page * rowsPerPage + rowsPerPage
                       )
                       .map((row) => {
+                        console.log({ row });
                         return (
                           <TableRow
                             hover
@@ -395,7 +399,9 @@ export default function GarmentStyle() {
                                   ) : column.name === "custom" ? (
                                     printChooseStyle(value)
                                   ) : column.name === "status" ? (
-                                    printStatus(value)
+                                    // console.log(value);
+                                    // printStatus(value)
+                                    value
                                   ) : column.name === "action" ? (
                                     <div>
                                       <IconButton

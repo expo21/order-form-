@@ -15,6 +15,7 @@ exports.getAllStyleOptions = async () => {
           deleted: item.deleted,
           title: item.title,
           custom: item.custom,
+          status: item.status,
           garment_type: item.garment_type.filter(
             (option) => option.deleted === false
           ),
