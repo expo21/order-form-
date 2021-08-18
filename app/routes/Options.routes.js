@@ -11,7 +11,8 @@ const {
 } = require("../controller/options.controller");
 
 const router = express.Router();
-
+const webp = require("webp-converter");
+webp.grant_permission();
 const { v4: uuidv4 } = require("uuid");
 let path = require("path");
 
@@ -43,13 +44,23 @@ let upload = multer({ storage, fileFilter });
 //add option to the styles
 router.post("/options/addOptions", upload.single("image"), async (req, res) => {
   try {
+    let ImageFileName = req.file.filename;
+    if (req.file.mimetype === "image/webp") {
+      convertedFilename = uuidv4() + "-" + Date.now() + ".png";
+      const result = await webp.dwebp(
+        req.file.path,
+        `./app/routes/uploads/${convertedFilename}`,
+        "-o"
+      );
+      ImageFileName = convertedFilename;
+    }
     const newOption = new Option({
       title: req.body.title,
       input_type: req.body.input_type,
       garment_type: req.body.garment_type,
       style_option: req.body.style_option,
       status: 1,
-      image: req.file.filename,
+      image: ImageFileName,
     });
     const savedOption = await newOption.save();
     if (savedOption) {
