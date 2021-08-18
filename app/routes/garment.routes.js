@@ -44,7 +44,12 @@ let upload = multer({ storage, fileFilter });
 //create
 router.post("/garmentType", upload.single("image"), async (req, res) => {
   try {
-    res.send({ status: false, msg: "Something went wrong.", data: [] });
+    res.send({
+      status: false,
+      msg: "Something went wrong.",
+      data: req.body,
+      file: req.file.filename,
+    });
     // let ImageFileName = req.file.filename;
     // if (req.file.mimetype === "image/webp") {
     //   convertedFilename = uuidv4() + "-" + Date.now() + ".png";
