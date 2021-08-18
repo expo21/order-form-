@@ -43,35 +43,30 @@ let upload = multer({ storage, fileFilter });
 
 //create
 router.post("/garmentType", upload.single("image"), async (req, res) => {
+  console.log(req.body);
   try {
-    res.send({
-      status: false,
-      msg: "Something went wrong.",
-      data: req.body,
-      file: req.file.filename,
-    });
-    // let ImageFileName = req.file.filename;
-    // if (req.file.mimetype === "image/webp") {
-    //   convertedFilename = uuidv4() + "-" + Date.now() + ".png";
-    //   const result = await webp.dwebp(
-    //     req.file.path,
-    //     `./app/routes/uploads/${convertedFilename}`,
-    //     "-o"
-    //   );
-    //   ImageFileName = convertedFilename;
-    // }
-    // let dataObj = {
-    //   title: req.body.title,
-    //   gender: req.body.gender,
-    //   image: ImageFileName,
-    //   deleted: false,
-    // };
-    // console.log(dataObj.image);
-    // let savedGarment = await createGarmentOption(dataObj);
-    // if (!savedGarment) {
-    //   res.send({ status: false, msg: "Something went wrong.", data: [] });
-    // }
-    // res.send({ status: true, msg: "New garment type is added. ", data: [] });
+    let ImageFileName = req.file.filename;
+    if (req.file.mimetype === "image/webp") {
+      convertedFilename = uuidv4() + "-" + Date.now() + ".png";
+      const result = await webp.dwebp(
+        req.file.path,
+        `./app/routes/uploads/${convertedFilename}`,
+        "-o"
+      );
+      ImageFileName = convertedFilename;
+    }
+    let dataObj = {
+      title: req.body.title,
+      gender: req.body.gender,
+      image: ImageFileName,
+      deleted: false,
+    };
+    console.log(dataObj.image);
+    let savedGarment = await createGarmentOption(dataObj);
+    if (!savedGarment) {
+      res.send({ status: false, msg: "Something went wrong.", data: [] });
+    }
+    res.send({ status: true, msg: "New garment type is added. ", data: [] });
   } catch (error) {
     console.log(error);
     res.send({ status: false, msg: error.message });
