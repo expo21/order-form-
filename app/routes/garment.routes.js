@@ -1,72 +1,59 @@
 const express = require("express");
+const router = express.Router();
 const {
   createGarmentOption,
   garmetsByGender,
   getAllGarments,
   removeGarment,
 } = require("../controller/garments.controller");
-const multer = require("multer");
+const { upload } = require("../upload/upload");
 
+//webp converter
 const webp = require("webp-converter");
 webp.grant_permission();
-const router = express.Router();
-const { v4: uuidv4 } = require("uuid");
-let path = require("path");
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "app/routes/uploads");
-  },
-  filename: function (req, file, cb) {
-    let filename =
-      uuidv4() + "-" + Date.now() + path.extname(file.originalname);
+// const storage = multer.diskStorage({
+//   destination: function (req, file, cb) {
+//     cb(null, "app/routes/uploads");
+//   },
+//   filename: function (req, file, cb) {
+//     let filename =
+//       uuidv4() + "-" + Date.now() + path.extname(file.originalname);
 
-    cb(null, filename);
-  },
-});
-
-const fileFilter = (req, file, cb) => {
-  const allowedFileTypes = [
-    "image/jpeg",
-    "image/jpg",
-    "image/png",
-    "image/webp",
-  ];
-  if (allowedFileTypes.includes(file.mimetype)) {
-    cb(null, true);
-  } else {
-    cb(null, false);
-  }
-};
-
-let upload = multer({ storage, fileFilter });
+//     cb(null, filename);
+//   },
+// });
 
 //create
-router.post("/garmentType", upload.single("image"), async (req, res) => {
-  console.log(req.body);
+router.post("/garmentType", upload.single("image", 1), async (req, res) => {
   try {
-    let ImageFileName = req.file.filename;
-    if (req.file.mimetype === "image/webp") {
-      convertedFilename = uuidv4() + "-" + Date.now() + ".png";
-      const result = await webp.dwebp(
-        req.file.path,
-        `./app/routes/uploads/${convertedFilename}`,
-        "-o"
-      );
-      ImageFileName = convertedFilename;
-    }
+    let ImageFileName = req.file.location;
+    // if (req.file.mimetype === "image/webp") {
+    //   convertedFilename = uuidv4() + "-" + Date.now() + ".png";
+    //   const result = await webp.dwebp(
+    //     req.file.path,
+    //     `./app/routes/uploads/${convertedFilename}`,
+    //     "-o"
+    //   );
+    //   ImageFileName = convertedFilename;
+    // }
+    console.log(ImageFileName);
     let dataObj = {
       title: req.body.title,
       gender: req.body.gender,
       image: ImageFileName,
       deleted: false,
     };
-    console.log(dataObj.image);
     let savedGarment = await createGarmentOption(dataObj);
     if (!savedGarment) {
       res.send({ status: false, msg: "Something went wrong.", data: [] });
     }
-    res.send({ status: true, msg: "New garment type is added. ", data: [] });
+    res.send({
+      status: true,
+      msg: "New garment type is added. ",
+      data: [],
+      file: req.file.location,
+    });
   } catch (error) {
     console.log(error);
     res.send({ status: false, msg: error.message });

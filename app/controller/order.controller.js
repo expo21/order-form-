@@ -58,6 +58,16 @@ exports.getOrderByName = async (obj) => {
   }
 };
 
+exports.getOrderById = async (id) => {
+  try {
+    let order = await Order.findById({ _id: id });
+    console.log(order);
+    return order;
+  } catch (error) {
+    return null;
+  }
+};
+
 //get order by order id
 exports.getOrderByOrderId = async (orderId) => {
   try {
@@ -72,6 +82,7 @@ exports.getOrderByOrderId = async (orderId) => {
           tel: order.tel,
           gender: order.gender,
           order_number: order.order_number,
+          _id: order._id,
         },
         step_2: { garment_type: order.garment_type },
         step_3: {

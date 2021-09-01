@@ -34,7 +34,6 @@ router.post("/styleOptions", async (req, res) => {
 //get style option by garmnet type
 
 router.get("/styleOptions/:garmentType/:gender", (req, res) => {
-  console.log(req.params.garmentType, req.params.gender);
   getStyleOptionByGarmentAndGender(req.params.garmentType, req.params.gender)
     .then((result) => {
       if (result.length > 0) {

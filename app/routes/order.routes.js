@@ -1,4 +1,3 @@
-const { response } = require("express");
 const express = require("express");
 const { auth } = require("../auth/auth");
 const router = express.Router();
@@ -8,7 +7,10 @@ const {
   getOrderByName,
   getOrderByOrderId,
   updateOrder,
+  getOrderById,
 } = require("../controller/order.controller");
+var pdf = require("html-pdf");
+const fs = require("fs");
 
 // get data
 router.get("/order", (req, res) => {
@@ -33,7 +35,6 @@ router.post("/createOrder", (req, res) => {
 
 //get search data
 router.post("/orderByName", auth, (req, res) => {
-  console.log("req.user ", req.user);
   // getOrderByName(req.body.name)
   //   .then((result) => {
   //     res.send({ status: true, message: "", data: result });

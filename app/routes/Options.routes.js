@@ -1,6 +1,5 @@
 const Option = require("../model/Options.model");
 const StyleOption = require("../model/StyleOptions.model");
-const multer = require("multer");
 
 const express = require("express");
 const {
@@ -9,51 +8,24 @@ const {
   removeGarmentFromOption,
   deleteOption,
 } = require("../controller/options.controller");
-
+const { upload } = require("../upload/upload");
 const router = express.Router();
 const webp = require("webp-converter");
 webp.grant_permission();
-const { v4: uuidv4 } = require("uuid");
-let path = require("path");
-
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "app/routes/uploads");
-  },
-  filename: function (req, file, cb) {
-    cb(null, uuidv4() + "-" + Date.now() + path.extname(file.originalname));
-  },
-});
-
-const fileFilter = (req, file, cb) => {
-  const allowedFileTypes = [
-    "image/jpeg",
-    "image/jpg",
-    "image/png",
-    "image/webp",
-  ];
-  if (allowedFileTypes.includes(file.mimetype)) {
-    cb(null, true);
-  } else {
-    cb(null, false);
-  }
-};
-
-let upload = multer({ storage, fileFilter });
 
 //add option to the styles
 router.post("/options/addOptions", upload.single("image"), async (req, res) => {
   try {
-    let ImageFileName = req.file.filename;
-    if (req.file.mimetype === "image/webp") {
-      convertedFilename = uuidv4() + "-" + Date.now() + ".png";
-      const result = await webp.dwebp(
-        req.file.path,
-        `./app/routes/uploads/${convertedFilename}`,
-        "-o"
-      );
-      ImageFileName = convertedFilename;
-    }
+    let ImageFileName = req.file.location;
+    // if (req.file.mimetype === "image/webp") {
+    //   convertedFilename = uuidv4() + "-" + Date.now() + ".png";
+    //   const result = await webp.dwebp(
+    //     req.file.path,
+    //     `./app/routes/uploads/${convertedFilename}`,
+    //     "-o"
+    //   );
+    //   ImageFileName = convertedFilename;
+    // }
     const newOption = new Option({
       title: req.body.title,
       input_type: req.body.input_type,
@@ -98,7 +70,6 @@ router.get("/options/optionsList", (req, res) => {
 
 //add garment type to the options of style
 router.post("/options/addGarmentToOptions/:id", (req, res) => {
-  console.log(req.params.id, req.body);
   addGarmentToOptions(req.params.id, req.body)
     .then((result) => {
       if (result) {

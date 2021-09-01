@@ -99,6 +99,7 @@ exports.getStyleOptionByGarmentAndGender = async (garment, gender) => {
     // ]);
     let styleOptions = await StyleOption.find({
       garment_type: garmentId[0].id,
+      deleted: false,
     }).populate("options");
 
     // let newas = styleOptions.map((x) => {
